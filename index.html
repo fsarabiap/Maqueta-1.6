@@ -26,7 +26,7 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:2px solid var(--navy);border-left:1px solid var(--rule);margin-bottom:12px}
 .opt{background:var(--white);border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:18px;text-align:left;font:inherit;cursor:pointer;min-height:124px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;color:var(--navy)}
 .opt:hover{background:var(--navy);color:#fff}
-.opt:hover em{color:#fff}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
+.opt:hover em,.opt:hover .nt{color:#fff}.nt{display:block;margin-top:10px;font-size:.78rem;font-weight:500;line-height:1.3;border-left:3px solid var(--red);padding-left:8px;color:var(--mute)}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
 .opt strong{display:block;font-weight:600;font-size:1rem;line-height:1.25;margin-bottom:6px}
 .opt em{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--red)}
 .ic{display:block;font-size:1.7rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:grayscale(1) contrast(1.1)}
@@ -81,7 +81,7 @@ fieldset{border:0;padding:0;margin-top:22px}
 
   <section id="s1">
     <div class="sumbox">
-      <div class="bar"><div><h2>Resumen de ingresos y gastos</h2><p class="sub" style="margin:0">Separado entre valorizados y efectivos</p></div>
+      <div class="bar"><div><h2>Resumen de ingresos y gastos</h2><p class="sub" style="margin:0">Efectivos: dinero · Valorizados: aportes en especies</p></div>
         <button class="btn" id="nIn" type="button">Registrar ingreso</button></div>
       <div class="tw"><table class="sum"><thead><tr><th></th><th class="n">Ingresos</th><th class="n">Gastos</th><th class="n">Saldo</th></tr></thead><tbody id="sm"></tbody></table></div>
     </div>
@@ -118,7 +118,7 @@ fieldset{border:0;padding:0;margin-top:22px}
     <h2>Registrar ingreso</h2><p class="sub">Aportes recibidos por la campaña.</p>
     <form id="fi" novalidate>
       <div class="fields">
-        <div><label for="itipo">Tipo de ingreso</label><select id="itipo"><option>Efectivo</option><option>Valorizado</option></select></div>
+        <div><label for="itipo">Tipo de ingreso</label><select id="itipo"><option value="Efectivo">Efectivo (dinero)</option><option value="Valorizado">Valorizado (aporte en especies)</option></select></div>
         <div><label for="iap">Nombre del aportante</label><input id="iap" autocomplete="off"><div class="err" id="e-iap"></div></div>
         <div><label for="irut">Rut aportante</label><input id="irut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-irut"></div></div>
         <div><label for="ifecha">Fecha</label><input id="ifecha" type="date"><div class="err" id="e-ifecha"></div></div>
@@ -175,6 +175,8 @@ const C=[
  ["✏️","Gastos menores o frecuentes","Útiles de oficina;Fotocopias;Correspondencia y courier;Ferretería;Librería;Recargas;Colaciones menores;Otros gastos menores"],
  ["💡","Gastos Básicos","Electricidad;Agua;Gas;Internet;Telefonía móvil;Telefonía fija;Gastos comunes;Aseo y mantención menor"]]]
 ];
+const TI=["📰 🏙️ 📍 📖 🌐 🖼️ 📝 🎨","📻 📡 📍 🗣️ 🏷️ 🎚️ 🎙️ 🎵","👍 📷 🎵 ✖️ ▶️ 🔎 🚀 🎞️","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹"];
+const NOTA="Este tipo de gasto se debe registrar hasta antes del día de la elección";
 const ALERTA="El gasto que esta registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
 const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
@@ -183,6 +185,8 @@ const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){retur
 let G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
 const sv=()=>{try{localStorage.setItem("gastos2",JSON.stringify(G));localStorage.setItem("ingresos2",JSON.stringify(IN))}catch(e){}};
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
+const base=C.map((c,i)=>C.slice(0,i).reduce((a,x)=>a+x[4].length,0));
+const ti=(i,j)=>(TI[base[i]+j]||"").split(" ");
 const ct=c=>`${c[2]} letra ${c[0]}${A}`;
 
 function showAl(auto){clearTimeout(alT);$("altx").textContent=ALERTA;$("al").hidden=false;if(auto)alT=setTimeout(hideAl,7000)}
@@ -191,9 +195,9 @@ $("alx").onclick=hideAl;
 
 function cards(id,items){
   const g=$(id);g.innerHTML="";
-  items.forEach(([ic,t,sm,fn])=>{
+  items.forEach(([ic,t,sm,fn,nt])=>{
     const b=document.createElement("button");b.className="opt";b.type="button";
-    b.innerHTML=(ic?`<span class="ic" aria-hidden="true">${ic}</span>`:"")+`<span><strong>${esc(t)}</strong><em>${esc(sm)}</em></span>`;
+    b.innerHTML=(ic?`<span class="ic" aria-hidden="true">${ic}</span>`:"")+`<span><strong>${esc(t)}</strong><em>${esc(sm)}</em>${nt?`<span class="nt">${esc(nt)}</span>`:""}</span>`;
     b.onclick=fn;g.append(b);
   });
 }
@@ -216,11 +220,11 @@ function home(){
     $("s2s").textContent=ct(c);
     cards("g2",c[4].map((s,j)=>[s[0],s[1],"8 tipos de gasto",()=>{st.s=j;
       $("s3s").textContent=s[1];
-      cards("g3",s[2].split(";").map((t,k)=>["",t,"Registrar",()=>{st.t=k;
+      cards("g3",s[2].split(";").map((t,k)=>[ti(i,j)[k],t,"Registrar",()=>{st.t=k;
         $("s4t").textContent=t;$("s4s").textContent=s[1]+" · Letra "+c[0].toUpperCase();
         $("f").reset();$("fl").textContent="";clr();show(4);if(c[3])showAl(false)}]));
       show(3)}]));
-    show(2)}]));
+    show(2)},c[3]?NOTA:""]));
 }
 
 // RUT
@@ -267,9 +271,10 @@ $("fi").addEventListener("submit",e=>{
 const sum=(a,f)=>a.filter(f).reduce((t,r)=>t+r.monto,0);
 function render(){
   const iE=sum(IN,r=>r.tipo==="Efectivo"),iV=sum(IN,r=>r.tipo==="Valorizado"),
-        gE=sum(G,r=>r.pago==="Pago Efectivo"),gV=sum(G,r=>r.pago!=="Pago Efectivo");
-  const row=(t,i,g,cls)=>`<tr class="${cls||""}"><th scope="row">${t}</th><td class="n">${fmt(i)}</td><td class="n">${fmt(g)}</td><td class="n ${i-g<0?"neg":""}">${fmt(i-g)}</td></tr>`;
-  $("sm").innerHTML=row("Efectivos",iE,gE)+row("Valorizados",iV,gV)+row("Total",iE+iV,gE+gV,"tot");
+        gE=sum(G,r=>r.pago==="Pago Efectivo"),gP=sum(G,r=>r.pago!=="Pago Efectivo");
+  const c=v=>v==null?"—":fmt(v);
+  const row=(t,i,g,s,cls)=>`<tr class="${cls||""}"><th scope="row">${t}</th><td class="n">${c(i)}</td><td class="n">${c(g)}</td><td class="n ${s<0?"neg":""}">${fmt(s)}</td></tr>`;
+  $("sm").innerHTML=row("Efectivos",iE,gE,iE-gE)+row("Valorizados (aportes en especies)",iV,null,iV)+row("Pendiente de pago",null,gP,-gP)+row("Total",iE+iV,gE+gP,iE+iV-gE-gP,"tot");
   $("cnt").textContent=G.length+(G.length===1?" registro":" registros");
   const d=f=>f.split("-").reverse().join("/");
   $("tb").innerHTML=G.length?G.map(r=>`<tr><td>${d(r.fecha)}</td>
@@ -281,7 +286,7 @@ function render(){
     <td class="n">${fmt(r.monto)}</td><td><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
   $("ti").innerHTML=IN.length?IN.map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><span class="tag">${esc(r.tipo)}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")
+    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
 document.addEventListener("click",e=>{
