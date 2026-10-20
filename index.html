@@ -73,7 +73,7 @@ fieldset{border:0;padding:0;margin-top:22px}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>Registro de gastos electorales</h1><p>Control de ingresos, gastos y respaldos · Ley N°19.884</p></div></header>
+<header><div class="wrap"><h1>Registro de gastos electorales</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
 <div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
 
 <main class="wrap">
@@ -83,7 +83,7 @@ fieldset{border:0;padding:0;margin-top:22px}
     <div class="sumbox">
       <div class="bar"><div><h2>Resumen de ingresos y gastos</h2><p class="sub" style="margin:0">Efectivos: dinero · Valorizados: aportes en especies</p></div>
         <button class="btn" id="nIn" type="button">Registrar ingreso</button></div>
-      <div class="tw"><table class="sum"><thead><tr><th></th><th class="n">Ingresos</th><th class="n">Gastos</th><th class="n">Saldo</th></tr></thead><tbody id="sm"></tbody></table></div>
+      <div class="tw"><table class="sum"><thead><tr><th></th><th class="n">Ingresos</th><th class="n">Gastos</th><th class="n">Diferencias</th></tr></thead><tbody id="sm"></tbody></table></div>
     </div>
     <h2>¿Qué tipo de gasto desea registrar?</h2>
     <p class="sub">Elija una categoría.</p>
@@ -177,7 +177,7 @@ const C=[
 ];
 const TI=["📰 🏙️ 📍 📖 🌐 🖼️ 📝 🎨","📻 📡 📍 🗣️ 🏷️ 🎚️ 🎙️ 🎵","👍 📷 🎵 ✖️ ▶️ 🔎 🚀 🎞️","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹"];
 const NOTA="Este tipo de gasto se debe registrar hasta antes del día de la elección";
-const ALERTA="El gasto que esta registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
+const ALERTA="El gasto que está registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
 const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
