@@ -142,8 +142,8 @@ const A=" art.2 Ley N°19.884";
 // [letra, icono, nombre, alerta 44 bis, [[icono, subcategoría, "Ingresar"]]]
 const C=[
 ["a","📣","Propaganda Electoral",0,[
- ["📰","Propaganda en medios de prensa escrito y digital","Aviso en diario nacional;Aviso en diario regional;Aviso en diario local;Aviso en revista;Publicidad en medio digital;Banner en sitio web;Publirreportaje;Diseño de aviso"],
- ["📻","Propaganda en radioemisoras","Spot radial nacional;Spot radial regional;Spot radial local;Mención en programa;Auspicio de programa;Producción de spot;Locución;Jingle y musicalización"],
+ ["📰","Propaganda en medios de prensa escrito y digital","Aviso en medios escritos;Publicidad en medio digital;Propaganda a traves de mensajería;Propaganda por Contacto Telefónico;Publicidad móvil (Perifoneo);Banner en sitio web;Servicios de Streaming o Podcast"],
+ ["📻","Propaganda en radioemisoras","Propaganda radial nacional; Propaganda radial regional; Radioemisora Digital "],
  ["📱","Propaganda en plataforma de redes sociales","Facebook;Instagram;TikTok;X;YouTube;Google Ads;Promoción de publicaciones;Producción de contenido pagado"],
  ["🖨️","Propaganda impresa y merchandising","Afiches;Volantes y folletos;Pendones y lienzos;Gigantografías;Pasacalles;Dípticos y trípticos;Poleras y gorros;Bolsas y lápices"],
  ["🎤","Evento de apertura o cierre de campaña electoral","Arriendo de recinto;Escenario y estructuras;Sonido e iluminación;Pantallas y audiovisual;Alimentación y cóctel;Animación y artistas;Seguridad y permisos;Decoración y ambientación"]]],
@@ -175,7 +175,7 @@ const C=[
  ["✏️","Gastos menores o frecuentes","Útiles de oficina;Fotocopias;Correspondencia y courier;Ferretería;Librería;Recargas;Colaciones menores;Otros gastos menores"],
  ["💡","Gastos Básicos","Electricidad;Agua;Internet;Telefonía"]]]
 ];
-const TI=["📰 🏙️ 📍 📖 🌐 🖼️ 📝 🎨","📻 📡 📍 🗣️ 🏷️ 🎚️ 🎙️ 🎵","👍 📷 🎵 ✖️ ▶️ 🔎 🚀 🎞️","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹"];
+const TI=["📰 🌐 📩 📞 📣 💻 🎧","📻 📡 🎙️","👍 📷 🎵 ✖️ ▶️ 🔎 🚀 🎞️","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹"];
 const NOTA="Este tipo de gasto se debe registrar hasta antes del día de la elección";
 const ALERTA="El gasto que está registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
 const $=id=>document.getElementById(id);
@@ -218,7 +218,7 @@ function show(n){
 function home(){
   cards("g1",C.map((c,i)=>[c[1],ct(c),c[4].length+(c[4].length===1?" subcategoría":" subcategorías")+(c[3]?" · art. 44 bis":""),()=>{st.c=i;
     $("s2s").textContent=ct(c);
-    cards("g2",c[4].map((s,j)=>[s[0],s[1],"8 tipos de gasto",()=>{st.s=j;
+    cards("g2",c[4].map((s,j)=>[s[0],s[1],"",()=>{st.s=j;
       $("s3s").textContent=s[1];
       cards("g3",s[2].split(";").map((t,k)=>[ti(i,j)[k],t,"Registrar",()=>{st.t=k;
         $("s4t").textContent=t;$("s4s").textContent=s[1]+" · Letra "+c[0].toUpperCase();
