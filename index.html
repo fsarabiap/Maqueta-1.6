@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Registro de gastos electorales · Ley N°19.884</title>
+<title>SIRPCE · Sistema Registro y Presentación de Contabilidad Electoral</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -24,9 +24,15 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .crumbs button{background:none;border:0;border-bottom:1px solid var(--red);font:inherit;color:var(--navy);cursor:pointer;padding:0}
 :focus-visible{outline:3px solid var(--red);outline-offset:2px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));border-top:2px solid var(--navy);border-left:1px solid var(--rule);margin-bottom:12px}
-.opt{background:var(--white);border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:18px;text-align:left;font:inherit;cursor:pointer;min-height:124px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;color:var(--navy)}
+.opt{position:relative;background:var(--white);border:0;border-right:1px solid var(--rule);border-bottom:1px solid var(--rule);padding:18px;text-align:left;font:inherit;cursor:pointer;min-height:124px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;color:var(--navy)}
 .opt:hover{background:var(--navy);color:#fff}
-.opt:hover em,.opt:hover .nt{color:#fff}.nt{display:block;margin-top:10px;font-size:.78rem;font-weight:500;line-height:1.3;border-left:3px solid var(--red);padding-left:8px;color:var(--mute)}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
+.opt:hover em,.opt:hover .nt{color:#fff}.nt{display:block;margin-top:10px;font-size:.8rem;font-weight:700;line-height:1.3;background:var(--red);color:#fff;padding:7px 9px}
+.cr{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--red)}
+.opt:hover .cr{color:#fff}.opt:has(.cr){padding-bottom:30px}
+.difal{border:1px solid var(--navy);border-left:6px solid var(--red);background:#fff;padding:12px 16px;font-weight:600;margin-bottom:12px}
+.stp{max-width:520px}.stp label,.stp .lbl{font-size:1.05rem;margin-bottom:8px}fieldset.stp{margin-top:0}
+.prog{flex:1 0 100%;font-family:var(--mono);font-size:.8rem;color:var(--mute)}
+.ed{background:none;border:0;color:var(--navy);cursor:pointer;font:inherit;text-decoration:underline;margin-right:12px}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
 .opt strong{display:block;font-weight:600;font-size:1rem;line-height:1.25;margin-bottom:6px}
 .opt em{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--red)}
 .ic{display:block;font-size:1.7rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:grayscale(1) contrast(1.1)}
@@ -41,7 +47,7 @@ td.n{font-weight:500}
 .sum .tot td,.sum .tot th{background:var(--navy);color:#fff;border:0;font-weight:700}
 .neg{color:var(--red)}.tot .neg{color:#FF8A91}
 form{background:#fff;border:1px solid var(--rule);border-top:2px solid var(--navy);padding:24px}
-.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px 20px}
+.fields{max-width:520px}
 label,.lbl{display:block;font-size:.85rem;font-weight:600;margin-bottom:5px}
 input,select{width:100%;font:inherit;padding:10px 11px;border:1px solid #8D97A6;border-radius:0;background:#fff;color:var(--navy)}
 input.m{font-family:var(--mono);font-weight:500;text-align:right}
@@ -73,7 +79,7 @@ fieldset{border:0;padding:0;margin-top:22px}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>Registro de gastos electorales</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
+<header><div class="wrap"><h1>Sistema Registro y Presentación de Contabilidad Electoral – SIRPCE</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
 <div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
 
 <main class="wrap">
@@ -83,6 +89,7 @@ fieldset{border:0;padding:0;margin-top:22px}
     <div class="sumbox">
       <div class="bar"><div><h2>Resumen de ingresos y gastos</h2><p class="sub" style="margin:0">Efectivos: dinero · Valorizados: aportes en especies</p></div>
         <button class="btn" id="nIn" type="button">Registrar ingreso</button></div>
+      <div class="difal" id="dif" role="alert" hidden></div>
       <div class="tw"><table class="sum"><thead><tr><th></th><th class="n">Ingresos</th><th class="n">Gastos</th><th class="n">Diferencias</th></tr></thead><tbody id="sm"></tbody></table></div>
     </div>
     <h2>¿Qué tipo de gasto desea registrar?</h2>
@@ -97,42 +104,42 @@ fieldset{border:0;padding:0;margin-top:22px}
     <h2 id="s4t"></h2><p class="sub" id="s4s"></p>
     <form id="f" novalidate>
       <div class="fields">
-        <div><label for="rut">Rut proveedor</label><input id="rut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-rut"></div></div>
-        <div><label for="prov">Nombre del proveedor</label><input id="prov" autocomplete="off"><div class="err" id="e-prov"></div></div>
-        <div><label for="tdoc">Tipo de documento</label>
+        <div class="stp"><label for="rut">Ingrese el RUT del proveedor</label><input id="rut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-rut"></div></div>
+        <div class="stp"><label for="prov">Ingrese el nombre del proveedor</label><input id="prov" autocomplete="off"><div class="err" id="e-prov"></div></div>
+        <div class="stp"><label for="tdoc">Seleccione el tipo de documento</label>
           <select id="tdoc"><option value="">Seleccione…</option><option>Factura afecta</option><option>Factura exenta</option><option>Boleta</option><option>Boleta de honorarios</option><option>Boleta de venta y servicios</option><option>Contrato / Convenio</option><option>Otro</option></select><div class="err" id="e-tdoc"></div></div>
-        <div><label for="ndoc">Número de factura o boleta</label><input id="ndoc" class="m" inputmode="numeric" autocomplete="off"><div class="err" id="e-ndoc"></div></div>
-        <div><label for="fecha">Fecha de documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
-        <div><label for="monto">Monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div>
+        <div class="stp"><label for="ndoc">Ingrese el número de factura o boleta</label><input id="ndoc" class="m" inputmode="numeric" autocomplete="off"><div class="err" id="e-ndoc"></div></div>
+        <div class="stp"><label for="fecha">Ingrese la fecha del documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
+        <div class="stp"><label for="monto">Ingrese el monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div>
       </div>
-      <fieldset><legend class="lbl">Forma de pago</legend>
+      <fieldset class="stp"><legend class="lbl">Seleccione la forma de pago</legend>
         <div class="pay"><label><input type="radio" name="pago" value="Pago Efectivo" checked> Pago Efectivo</label>
         <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label></div></fieldset>
-      <div style="margin-top:22px"><label for="arch">Adjuntar archivos (factura, boleta, comprobante)</label>
+      <div class="stp"><label for="arch">Adjunte los archivos de respaldo (factura, boleta, comprobante)</label>
         <input id="arch" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl"></div></div>
-      <div class="actions"><button class="btn" type="submit">Guardar gasto</button><button class="btn alt" type="button" id="cancel">Cancelar</button></div>
+      <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
   </section>
 
   <section id="s5" hidden>
-    <h2>Registrar ingreso</h2><p class="sub">Aportes recibidos por la campaña.</p>
+    <h2 id="s5t">Registrar ingreso</h2><p class="sub">Aportes recibidos por la campaña.</p>
     <form id="fi" novalidate>
       <div class="fields">
-        <div><label for="itipo">Tipo de ingreso</label><select id="itipo"><option value="Efectivo">Efectivo (dinero)</option><option value="Valorizado">Valorizado (aporte en especies)</option></select></div>
-        <div><label for="iap">Nombre del aportante</label><input id="iap" autocomplete="off"><div class="err" id="e-iap"></div></div>
-        <div><label for="irut">Rut aportante</label><input id="irut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-irut"></div></div>
-        <div><label for="ifecha">Fecha</label><input id="ifecha" type="date"><div class="err" id="e-ifecha"></div></div>
-        <div><label for="imonto">Monto (CLP)</label><input id="imonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-imonto"></div></div>
+        <div class="stp"><label for="itipo">Seleccione el tipo de ingreso</label><select id="itipo"><option value="Efectivo">Efectivo (dinero)</option><option value="Valorizado">Valorizado (aporte en especies)</option></select></div>
+        <div class="stp"><label for="iap">Ingrese el nombre del aportante</label><input id="iap" autocomplete="off"><div class="err" id="e-iap"></div></div>
+        <div class="stp"><label for="irut">Ingrese el RUT del aportante</label><input id="irut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-irut"></div></div>
+        <div class="stp"><label for="ifecha">Ingrese la fecha del ingreso</label><input id="ifecha" type="date"><div class="err" id="e-ifecha"></div></div>
+        <div class="stp"><label for="imonto">Ingrese el monto (CLP)</label><input id="imonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-imonto"></div></div>
       </div>
-      <div class="actions"><button class="btn" type="submit">Guardar ingreso</button><button class="btn alt" type="button" id="cancelI">Cancelar</button></div>
+      <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
   </section>
 
   <section class="log">
-    <div class="bar"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><button class="btn alt" id="csv" type="button">Exportar CSV</button></div>
-    <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
-    <div class="bar" style="margin-top:32px"><div><h2>Ingresos registrados</h2></div></div>
+    <div class="bar"><div><h2>Ingresos registrados</h2></div></div>
     <div class="tw"><table style="min-width:560px"><thead><tr><th>Fecha</th><th>Aportante</th><th>Tipo</th><th class="n">Monto</th><th></th></tr></thead><tbody id="ti"></tbody></table></div>
+    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><button class="btn alt" id="csv" type="button">Exportar CSV</button></div>
+    <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
   </section>
 </main>
 <div class="toast" id="toast" role="status"></div>
@@ -173,16 +180,20 @@ const C=[
  ["🔏","Pendiente de registro 2","Impuesto de timbre y estampillas;Timbres en contratos;Timbres en pagarés;Estampillas;Gastos notariales;Legalización de firmas;Protocolización de documentos;Copias autorizadas"]]],
 ["g","🛒","Gastos menores y frecuentes",0,[
  ["✏️","Gastos menores o frecuentes","Útiles de oficina;Fotocopias;Correspondencia y courier;Ferretería;Librería;Recargas;Colaciones menores;Otros gastos menores"],
- ["💡","Gastos Básicos","Electricidad;Agua;Internet;Telefonía"]]]
+ ["💡","Gastos Básicos","Electricidad;Agua;Internet;Telefonía"]]],
+["h","🙋","Gastos por trabajos de campaña, proporcionados por personas con carácter voluntario",0,[
+ ["🤲","Trabajos de campaña voluntarios","Reparto de propaganda;Pegado de afiches;Atención de sede;Apoyo en eventos;Trabajo administrativo;Difusión en terreno;Apoyo logístico;Otros trabajos voluntarios"]]],
+["i","🏦","Pagos por concepto de comisión bancaria devengados con motivo de la operación de cuenta abierta",0,[
+ ["🏦","Comisión bancaria de cuenta abierta","Mantención de cuenta;Transferencias;Cheques;Depósitos;Giros;Tarjetas;Cartolas y certificados;Otras comisiones"]]]
 ];
-const TI=["📰 🌐 📩 📞 📣 💻 🎧","📻 📡 🎙️","👍 📷 🎵 ✖️ ▶️ 🔎","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹"];
+const TI=["📰 🌐 📩 📞 📣 💻 🎧","📻 📡 🎙️","👍 📷 🎵 ✖️ ▶️ 🔎","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹","📬 🖼️ 🏢 🎪 🗂️ 📢 📦 🧩","🔧 💱 🧾 💵 🏧 💳 📄 🧮"];
 const NOTA="Este tipo de gasto se debe registrar hasta antes del día de la elección";
 const ALERTA="El gasto que está registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
 const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}};
-let G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
+let ed=null,G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
 const sv=()=>{try{localStorage.setItem("gastos2",JSON.stringify(G));localStorage.setItem("ingresos2",JSON.stringify(IN))}catch(e){}};
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
 const base=C.map((c,i)=>C.slice(0,i).reduce((a,x)=>a+x[4].length,0));
@@ -195,20 +206,24 @@ $("alx").onclick=hideAl;
 
 function cards(id,items){
   const g=$(id);g.innerHTML="";
-  items.forEach(([ic,t,sm,fn,nt])=>{
+  items.forEach(([ic,t,sm,fn,nt,cr])=>{
     const b=document.createElement("button");b.className="opt";b.type="button";
-    b.innerHTML=(ic?`<span class="ic" aria-hidden="true">${ic}</span>`:"")+`<span><strong>${esc(t)}</strong><em>${esc(sm)}</em>${nt?`<span class="nt">${esc(nt)}</span>`:""}</span>`;
+    b.innerHTML=(ic?`<span class="ic" aria-hidden="true">${ic}</span>`:"")+`<span><strong>${esc(t)}</strong><em>${esc(sm)}</em>${nt?`<span class="nt">${esc(nt)}</span>`:""}</span>`+(cr?`<span class="cr">${esc(cr)}</span>`:"");
     b.onclick=fn;g.append(b);
   });
 }
 function show(n){
+  if(n<4)ed=null;
   ["s1","s2","s3","s4","s5"].forEach((id,i)=>$(id).hidden=(i+1)!==n);
   if(n!==4)hideAl();
   const c=$("crumbs");c.innerHTML="";
   const L=[["Tipos de gasto",1]];
-  if(n>=2&&n<=4){const C0=C[st.c];L.push(["Letra "+C0[0].toUpperCase(),2]);
-    if(n>=3)L.push([C0[4][st.s][1].length>40?C0[4][st.s][1].slice(0,40)+"…":C0[4][st.s][1],3]);}
-  if(n===5)L.push(["Ingreso",5]);
+  if(ed&&n>=4)L.push(["Editar registro",n]);
+  else{
+    if(n>=2&&n<=4){const C0=C[st.c];L.push(["Letra "+C0[0].toUpperCase(),2]);
+      if(n>=3)L.push([C0[4][st.s][1].length>40?C0[4][st.s][1].slice(0,40)+"…":C0[4][st.s][1],3]);}
+    if(n===5)L.push(["Ingreso",5]);
+  }
   if(n>1)L.forEach(([t,s],i)=>{
     if(i)c.append(" / ");
     if(s<n){const b=document.createElement("button");b.textContent=t;b.onclick=()=>show(s);c.append(b)}else c.append(t);
@@ -222,9 +237,9 @@ function home(){
       $("s3s").textContent=s[1];
       cards("g3",s[2].split(";").map((t,k)=>[ti(i,j)[k],t,"Registrar",()=>{st.t=k;
         $("s4t").textContent=t;$("s4s").textContent=s[1]+" · Letra "+c[0].toUpperCase();
-        $("f").reset();$("fl").textContent="";clr();show(4);if(c[3])showAl(false)}]));
+        ed=null;$("f").reset();$("fl").textContent="";clr();W.f.i=0;wz("f");show(4);if(c[3])showAl(false)}]));
       show(3)}]));
-    show(2)},c[3]?NOTA:""]));
+    show(2)},c[3]?NOTA:"","Letrita"]));
 }
 
 // RUT
@@ -237,41 +252,71 @@ const money=id=>$(id).addEventListener("input",e=>{const n=e.target.value.replac
 money("monto");money("imonto");
 $("ndoc").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
 $("arch").addEventListener("change",e=>{$("fl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
-$("cancel").onclick=()=>show(3);$("cancelI").onclick=()=>show(1);
-$("nIn").onclick=()=>{$("fi").reset();clr();show(5)};
+$("nIn").onclick=()=>{ed=null;$("fi").reset();clr();$("s5t").textContent="Registrar ingreso";W.fi.i=0;wz("fi");show(5)};
 const clr=()=>document.querySelectorAll(".err").forEach(e=>e.textContent="");
 const val=s=>+s.replace(/\D/g,"");
 
-$("f").addEventListener("submit",e=>{
-  e.preventDefault();clr();let ok=true;const bad=(k,m)=>{$("e-"+k).textContent=m;ok=false};
-  if(!rutOk($("rut").value))bad("rut","Ingrese un RUT válido.");
-  if(!$("prov").value.trim())bad("prov","Ingrese el nombre del proveedor.");
-  if(!$("tdoc").value)bad("tdoc","Seleccione el tipo de documento.");
-  if(!$("ndoc").value)bad("ndoc","Ingrese el número del documento.");
-  if(!$("fecha").value)bad("fecha","Seleccione la fecha.");
-  const monto=val($("monto").value);if(!monto)bad("monto","Ingrese un monto mayor a cero.");
-  if(!ok)return;
-  const c=C[st.c],s=c[4][st.s];
-  G.unshift({id:Date.now(),cat:"Letra "+c[0].toUpperCase()+" · "+c[2],sub:s[1],tipo:s[2].split(";")[st.t],rut:$("rut").value,prov:$("prov").value.trim(),
-    tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto,pago:document.querySelector("input[name=pago]:checked").value,
-    arch:[...$("arch").files].map(f=>f.name)});
-  sv();render();show(1);toast("Gasto registrado");if(c[3])showAl(true);
+const W={f:{i:0},fi:{i:0}};
+const R=(id,m)=>()=>rutOk($(id).value)?"":m;
+const NE=(id,m)=>()=>$(id).value.trim()?"":m;
+const V={
+ f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),()=>val($("monto").value)?"":"Ingrese un monto mayor a cero.",()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo."],
+ fi:[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),()=>val($("imonto").value)?"":"Ingrese un monto mayor a cero."]
+};
+function wz(id){
+  const f=$(id),S=[...f.querySelectorAll(".stp")],i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
+  S.forEach((s,k)=>{s.hidden=k!==i;if(!s.querySelector(".err")){const e=document.createElement("div");e.className="err";s.append(e)}});
+  q("prev").hidden=i===0;
+  q("next").textContent=i===S.length-1?(id==="f"?"Guardar gasto":"Guardar ingreso"):"Siguiente";
+  q("prog").textContent="Paso "+(i+1)+" de "+S.length;
+  const x=S[i].querySelector("input:not([type=radio]),select");if(x&&x.type!=="file")x.focus();
+}
+function next(id){
+  const S=[...$(id).querySelectorAll(".stp")],i=W[id].i,m=V[id][i]();
+  clr();
+  if(m){S[i].querySelector(".err").textContent=m;return}
+  if(i<S.length-1){W[id].i++;wz(id)}else(id==="f"?saveG:saveI)();
+}
+["f","fi"].forEach(id=>{const f=$(id);
+  f.addEventListener("submit",e=>{e.preventDefault();next(id)});
+  f.querySelector("[data-w=next]").onclick=()=>next(id);
+  f.querySelector("[data-w=prev]").onclick=()=>{clr();W[id].i--;wz(id)};
+  f.querySelector("[data-w=cancel]").onclick=()=>show(id==="f"&&!ed?3:1);
 });
-$("fi").addEventListener("submit",e=>{
-  e.preventDefault();clr();let ok=true;const bad=(k,m)=>{$("e-"+k).textContent=m;ok=false};
-  if(!$("iap").value.trim())bad("iap","Ingrese el aportante.");
-  if(!rutOk($("irut").value))bad("irut","Ingrese un RUT válido.");
-  if(!$("ifecha").value)bad("ifecha","Seleccione la fecha.");
-  const monto=val($("imonto").value);if(!monto)bad("imonto","Ingrese un monto mayor a cero.");
-  if(!ok)return;
-  IN.unshift({id:Date.now(),tipo:$("itipo").value,ap:$("iap").value.trim(),rut:$("irut").value,fecha:$("ifecha").value,monto});
-  sv();render();show(1);toast("Ingreso registrado");
-});
+function saveG(){
+  const arch=[...$("arch").files].map(f=>f.name),was=!!ed;
+  const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value};
+  let a44;
+  if(ed){Object.assign(ed.rec,d);if(arch.length)ed.rec.arch=arch;a44=ed.rec.a44}
+  else{const c=C[st.c],s=c[4][st.s];a44=!!c[3];
+    G.unshift({id:Date.now(),cat:"Letra "+c[0].toUpperCase()+" · "+c[2],sub:s[1],tipo:s[2].split(";")[st.t],a44,...d,arch})}
+  sv();render();show(1);toast(was?"Gasto actualizado":"Gasto registrado");if(a44)showAl(true);
+}
+function saveI(){
+  const was=!!ed,d={tipo:$("itipo").value,ap:$("iap").value.trim(),rut:$("irut").value,fecha:$("ifecha").value,monto:val($("imonto").value)};
+  if(ed)Object.assign(ed.rec,d);else IN.unshift({id:Date.now(),...d});
+  sv();render();show(1);toast(was?"Ingreso actualizado":"Ingreso registrado");
+}
+function editG(id){
+  const r=G.find(x=>x.id==id);if(!r)return;ed={k:"g",rec:r};$("f").reset();clr();
+  $("rut").value=r.rut;$("prov").value=r.prov;$("tdoc").value=r.tdoc;$("ndoc").value=r.ndoc;$("fecha").value=r.fecha;$("monto").value=r.monto.toLocaleString("es-CL");
+  document.querySelector('input[name=pago][value="'+r.pago+'"]').checked=true;
+  $("fl").textContent=r.arch.length?"Archivos actuales: "+r.arch.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
+  $("s4t").textContent="Editar: "+r.tipo;$("s4s").textContent=r.sub+" · "+r.cat;
+  W.f.i=0;wz("f");show(4);if(r.a44)showAl(false);
+}
+function editI(id){
+  const r=IN.find(x=>x.id==id);if(!r)return;ed={k:"i",rec:r};$("fi").reset();clr();
+  $("itipo").value=r.tipo;$("iap").value=r.ap;$("irut").value=r.rut;$("ifecha").value=r.fecha;$("imonto").value=r.monto.toLocaleString("es-CL");
+  $("s5t").textContent="Editar ingreso";W.fi.i=0;wz("fi");show(5);
+}
 
 const sum=(a,f)=>a.filter(f).reduce((t,r)=>t+r.monto,0);
 function render(){
   const iE=sum(IN,r=>r.tipo==="Efectivo"),iV=sum(IN,r=>r.tipo==="Valorizado"),
         gE=sum(G,r=>r.pago==="Pago Efectivo"),gP=sum(G,r=>r.pago!=="Pago Efectivo");
+  const df=iE+iV-gE,dfe=$("dif");
+  dfe.hidden=df===0;dfe.textContent=df>0?"Los Ingresos electorales son mayores que los gastos, favor corregir":"Los Gastos electorales son mayores que los ingresos, favor corregir";
   const c=v=>v==null?"—":fmt(v);
   const row=(t,i,g,s,cls)=>`<tr class="${cls||""}"><th scope="row">${t}</th><td class="n">${c(i)}</td><td class="n">${c(g)}</td><td class="n ${s<0?"neg":""}">${fmt(s)}</td></tr>`;
   $("sm").innerHTML=row("Efectivos",iE,gE,iE-gE)+row("Valorizados (aportes en especies)",iV,null,iV)+row("Pendiente de pago",gP,gP,0)+row("Total",iE+iV+gP,gE+gP,iE+iV-gE,"tot");
@@ -283,15 +328,16 @@ function render(){
     <td>${esc(r.tdoc)}<br><span class="mm">N° ${esc(r.ndoc)}</span></td>
     <td><span class="tag ${r.pago.startsWith("Pend")?"p":""}">${esc(r.pago)}</span></td>
     <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}</td>
-    <td class="n">${fmt(r.monto)}</td><td><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
+    <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
   const auto=G.filter(r=>r.pago!=="Pago Efectivo").map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`).join("");
   $("ti").innerHTML=(IN.length||auto)?IN.map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")+auto
+    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")+auto
    :`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
 document.addEventListener("click",e=>{
-  const g=e.target.dataset.g,i=e.target.dataset.i;
+  const D=e.target.dataset;if(D.eg)return editG(D.eg);if(D.ei)return editI(D.ei);
+  const g=D.g,i=D.i;
   if(g&&confirm("¿Eliminar este gasto?")){G=G.filter(r=>r.id!=g);sv();render()}
   if(i&&confirm("¿Eliminar este ingreso?")){IN=IN.filter(r=>r.id!=i);sv();render()}
 });
