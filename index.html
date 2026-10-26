@@ -186,6 +186,17 @@ const C=[
 ["i","🏦","Pagos por concepto de comisión bancaria devengados con motivo de la operación de cuenta abierta",0,[
  ["🏦","Comisión bancaria de cuenta abierta","Mantención de cuenta;Transferencias;Cheques;Depósitos;Giros;Tarjetas;Cartolas y certificados;Otras comisiones"]]]
 ];
+const LT=[
+  "Letra a",   // Propaganda Electoral
+  "Letra b",   // Encuestas
+  "Letra c",   // Arrendamientos
+  "Letra d",   // Servicios prestados
+  "Letra e",   // Desplazamiento
+  "Letra f",   // Intereses, timbre y notariales
+  "Letra g",   // Gastos menores y frecuentes
+  "Letra h",   // Trabajos voluntarios
+  "Letra i"    // Comisión bancaria
+];
 const TI=["📰 🌐 📩 📞 📣 💻 🎧","📻 📡 🎙️","👍 📷 🎵 ✖️ ▶️ 🔎","🖼️ 📄 🚩 🏙️ 🎏 📑 👕 👜","🏟️ 🎭 🎛️ 📽️ 🥂 🎶 🛡️ 🎈","📊 🗨️ 👥 🌍 📞 🚶 💻 📈","🏢 🏛️ 🏠 🚪 💼 📦 🧾 🛋️","🚗 🛻 🚐 🚌 🚕 ⛽ 🛣️ 🛡️","🪑 ⛺ 🔊 💻 ⚡ 📽️ 🚻 🚧","🚚 🛻 🚐 📦 ⛽ 🛣️ 🏗️ 🛡️","🏨 🛏️ 🏠 🛖 🏢 🌙 📅 🔑","🍲 🥐 🍞 🍝 🥪 🍱 ☕ 🍳","🦺 📬 🖼️ 📢 📋 🧭 🕐 💵","🧒 🧓 ♿ 🍼 🩺 🕗 🕐 🎪","📣 📺 🗞️ 🔄 👷 🎬 🎟️ 🧠","🗓️ 🕗 🧾 📝 🧮 📒 💳 🧳","💬 ♟️ 🎞️ 🎨 ✂️ 📷 🎯 📈","🏘️ 🗺️ 📍 🧭 ⭐ 🗓️ 🕗 🚙","🗓️ 🕗 🎤 ✍️ 📰 📺 📄 📆","⚖️ ♟️ 🛡️ 🧹 🖨️ 💻 🌐 🛠️","🚕 🚍 ⛽ 🛣️ 🅿️ 🚌 🚖 🚇","✈️ 🛩️ 🌎 🔄 🧳 🎫 🚐 🧭","🏦 💳 ⏰ 🛍️ 📈 🤝 💱 🧾","🔏 📝 💸 🏷️ ⚖️ ✍️ 📜 📑","✏️ 📠 📮 🔧 📚 📱 🥪 🧾","💡 🚰 🔥 📶 📱 ☎️ 🏢 🧹","📬 🖼️ 🏢 🎪 🗂️ 📢 📦 🧩","🔧 💱 🧾 💵 🏧 💳 📄 🧮"];
 const NOTA="Este tipo de gasto se debe registrar hasta antes del día de la elección";
 const ALERTA="El gasto que está registrando se encuentra dentro del artículo 44 bis de la Ley N°19.884";
@@ -239,7 +250,7 @@ function home(){
         $("s4t").textContent=t;$("s4s").textContent=s[1]+" · Letra "+c[0].toUpperCase();
         ed=null;$("f").reset();$("fl").textContent="";clr();W.f.i=0;wz("f");show(4);if(c[3])showAl(false)}]));
       show(3)}]));
-    show(2)},c[3]?NOTA:"","Letrita"]));
+    show(2)},c[3]?NOTA:"",LT[i]]));
 }
 
 // RUT
@@ -267,7 +278,7 @@ function wz(id){
   const f=$(id),S=[...f.querySelectorAll(".stp")],i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
   S.forEach((s,k)=>{s.hidden=k!==i;if(!s.querySelector(".err")){const e=document.createElement("div");e.className="err";s.append(e)}});
   q("prev").hidden=i===0;
-  q("next").textContent=i===S.length-1?(id==="f"?"Guardar gasto":"Guardar ingreso"):"Siguiente";
+  q("next").textContent=i===S.length-1?(id==="f"?"Registrar gasto":"Guardar ingreso"):"Siguiente";
   q("prog").textContent="Paso "+(i+1)+" de "+S.length;
   const x=S[i].querySelector("input:not([type=radio]),select");if(x&&x.type!=="file")x.focus();
 }
