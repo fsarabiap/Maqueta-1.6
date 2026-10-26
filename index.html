@@ -274,7 +274,7 @@ function render(){
         gE=sum(G,r=>r.pago==="Pago Efectivo"),gP=sum(G,r=>r.pago!=="Pago Efectivo");
   const c=v=>v==null?"—":fmt(v);
   const row=(t,i,g,s,cls)=>`<tr class="${cls||""}"><th scope="row">${t}</th><td class="n">${c(i)}</td><td class="n">${c(g)}</td><td class="n ${s<0?"neg":""}">${fmt(s)}</td></tr>`;
-  $("sm").innerHTML=row("Efectivos",iE,gE,iE-gE)+row("Valorizados (aportes en especies)",iV,null,iV)+row("Pendiente de pago",null,gP,-gP)+row("Total",iE+iV,gE+gP,iE+iV-gE-gP,"tot");
+  $("sm").innerHTML=row("Efectivos",iE,gE,iE-gE)+row("Valorizados (aportes en especies)",iV,null,iV)+row("Pendiente de pago",gP,gP,0)+row("Total",iE+iV+gP,gE+gP,iE+iV-gE,"tot");
   $("cnt").textContent=G.length+(G.length===1?" registro":" registros");
   const d=f=>f.split("-").reverse().join("/");
   $("tb").innerHTML=G.length?G.map(r=>`<tr><td>${d(r.fecha)}</td>
@@ -285,8 +285,9 @@ function render(){
     <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}</td>
     <td class="n">${fmt(r.monto)}</td><td><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
-  $("ti").innerHTML=IN.length?IN.map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")
+  const auto=G.filter(r=>r.pago!=="Pago Efectivo").map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`).join("");
+  $("ti").innerHTML=(IN.length||auto)?IN.map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
+    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")+auto
    :`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
 document.addEventListener("click",e=>{
