@@ -283,7 +283,7 @@ const val=s=>+s.replace(/\D/g,"");
 const W={f:{i:0},fi:{i:0}};
 const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
-const MON=id=>()=>{const v=val($(id).value);if(v>50000)return"";showMin();return"El monto debe ser mayor a $50.000."};
+const MON=id=>()=>{const v=val($(id).value);if(v>49999)return"";showMin();return"El monto debe ser mayor o igual a $50.000."};
 const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return $("infs").value?"":"Seleccione el contenido del informe."};
 const V={
  f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
