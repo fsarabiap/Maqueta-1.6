@@ -30,7 +30,8 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .cr{position:absolute;right:10px;bottom:8px;font-family:var(--mono);font-size:.72rem;font-weight:700;color:var(--red)}
 .opt:hover .cr{color:#fff}.opt:has(.cr){padding-bottom:30px}
 .difal{border:1px solid var(--navy);border-left:6px solid var(--red);background:#fff;padding:12px 16px;font-weight:600;margin-bottom:12px}
-.stp{max-width:520px}.stp label,.stp .lbl{font-size:1.05rem;margin-bottom:8px}fieldset.stp{margin-top:0}
+.stp{max-width:520px}.stp label,.stp .lbl{font-size:1.05rem;margin-bottom:8px}fieldset.stp{margin-top:0;max-width:780px}.stp.mt{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;max-width:860px}.mt>div{flex:1 1 260px}.mt>.err{flex:1 0 100%}
+.note{flex:1 1 240px;background:var(--navy);color:#fff;border-left:5px solid var(--red);padding:14px 16px;font-size:.9rem;font-weight:500;line-height:1.4}.srt{width:auto}select{text-overflow:ellipsis}
 .prog{flex:1 0 100%;font-family:var(--mono);font-size:.8rem;color:var(--mute)}
 .ed{background:none;border:0;color:var(--navy);cursor:pointer;font:inherit;text-decoration:underline;margin-right:12px}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
 .opt strong{display:block;font-weight:600;font-size:1rem;line-height:1.25;margin-bottom:6px}
@@ -71,8 +72,9 @@ fieldset{border:0;padding:0;margin-top:22px}
 .del{background:none;border:0;color:var(--red);cursor:pointer;font:inherit;text-decoration:underline}
 .empty{padding:26px;color:var(--mute);text-align:center}
 .mut{color:var(--mute)}.mm{font-family:var(--mono);font-size:.8rem}
-#al{position:fixed;top:16px;right:16px;z-index:50;max-width:340px;background:#fff;border:1px solid var(--navy);border-left:6px solid var(--red);padding:14px 38px 14px 16px;font-size:.9rem;font-weight:600;box-shadow:0 6px 24px rgba(10,27,51,.25)}
-#al button{position:absolute;top:6px;right:8px;background:none;border:0;font-size:1.2rem;cursor:pointer;color:var(--navy)}
+#alc{position:fixed;top:16px;right:16px;z-index:50;width:340px;max-width:calc(100% - 32px);display:flex;flex-direction:column;gap:10px}
+#al,#al2{position:relative;background:#fff;border:1px solid var(--navy);border-left:6px solid var(--red);padding:14px 38px 14px 16px;font-size:.9rem;font-weight:600;box-shadow:0 6px 24px rgba(10,27,51,.25)}
+#al button,#al2 button{position:absolute;top:6px;right:8px;background:none;border:0;font-size:1.2rem;cursor:pointer;color:var(--navy)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-left:5px solid var(--red);opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
 [hidden]{display:none!important}
@@ -80,7 +82,8 @@ fieldset{border:0;padding:0;margin-top:22px}
 </head>
 <body>
 <header><div class="wrap"><h1>Sistema Registro y Presentación de Contabilidad Electoral – SIRPCE</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
-<div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
+<div id="alc"><div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
+<div id="al2" role="alert" hidden><span>El monto ingresado debe ser mayor a $50.000</span><button type="button" aria-label="Cerrar" id="al2x">×</button></div></div>
 
 <main class="wrap">
   <nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
@@ -110,13 +113,19 @@ fieldset{border:0;padding:0;margin-top:22px}
           <select id="tdoc"><option value="">Seleccione…</option><option>Factura afecta</option><option>Factura exenta</option><option>Boleta</option><option>Boleta de honorarios</option><option>Boleta de venta y servicios</option><option>Contrato / Convenio</option><option>Otro</option></select><div class="err" id="e-tdoc"></div></div>
         <div class="stp"><label for="ndoc">Ingrese el número de factura o boleta</label><input id="ndoc" class="m" inputmode="numeric" autocomplete="off"><div class="err" id="e-ndoc"></div></div>
         <div class="stp"><label for="fecha">Ingrese la fecha del documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
-        <div class="stp"><label for="monto">Ingrese el monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div>
+        <div class="stp mt"><div><label for="monto">Ingrese el monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div><aside class="note">Recuerde que los gastos registrados deben ser justificados de acuerdo al valor de mercado</aside></div>
       </div>
       <fieldset class="stp"><legend class="lbl">Seleccione la forma de pago</legend>
         <div class="pay"><label><input type="radio" name="pago" value="Pago Efectivo" checked> Pago Efectivo</label>
-        <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label></div></fieldset>
+        <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label>
+        <label><input type="radio" name="pago" value="Aporte de mi propio bolsillo"> Aporte de mi propio bolsillo</label>
+        <label><input type="radio" name="pago" value="Aportado por otra persona"> Aportado por otra persona</label>
+        <label><input type="radio" name="pago" value="Aportado por el partido político"> Aportado por el partido político</label>
+        <label><input type="radio" name="pago" value="Aportado por el Estado"> Aportado por el Estado</label>
+        <label><input type="radio" name="pago" value="Crédito de una institución financiera"> Crédito de una institución financiera</label></div></fieldset>
       <div class="stp"><label for="arch">Adjunte los archivos de respaldo (factura, boleta, comprobante)</label>
         <input id="arch" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl"></div></div>
+      <div class="stp mt"><div><label for="inf">Adjunte el informe de actividades</label><input id="inf" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl2"></div></div><div><label for="infs">Contenido del informe</label><select id="infs"><option value="">Seleccione…</option><option value="a">a) Detalle de todas las actividades realizadas con el debido desarrollo que explique claramente el servicio prestado</option><option value="b">b) Medios de comprobación documental tales como, imágenes, capturas de pantalla, correos electrónicos, videos, folletos o cualquier otro</option><option value="c">c) Firma de recepción conforme del informe, por parte del administrador general electoral o administrador electoral</option><option value="d">d) Firma del proveedor de los servicios</option><option value="e">e) Indicar las fechas en las cuales se prestaron los servicios y/o se entregaron los bienes utilizados en la campaña electoral</option><option value="f">f) Justificación del valor de mercado pagado contra la prestación del servicio, mediante antecedentes o presupuestos, tales como, contrato de servicios, cuadros comparativos de valores, estudios de mercado, correos electrónicos o cualquier otro que acredite el citado valor</option></select></div><div class="err" id="e-inf"></div></div>
       <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
   </section>
@@ -136,16 +145,16 @@ fieldset{border:0;padding:0;margin-top:22px}
   </section>
 
   <section class="log">
-    <div class="bar"><div><h2>Ingresos registrados</h2></div></div>
+    <div class="bar"><div><h2>Ingresos registrados</h2></div><select class="srt" data-s="i" aria-label="Ordenar ingresos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option></select></div>
     <div class="tw"><table style="min-width:560px"><thead><tr><th>Fecha</th><th>Aportante</th><th>Tipo</th><th class="n">Monto</th><th></th></tr></thead><tbody id="ti"></tbody></table></div>
-    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><button class="btn alt" id="csv" type="button">Exportar CSV</button></div>
+    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="srt" data-s="g" aria-label="Ordenar gastos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option></select><button class="btn alt" id="csv" type="button">Exportar CSV</button></div></div>
     <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
   </section>
 </main>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
-const A="";
+const A="art.2 Ley N°19.884";
 // [letra, icono, nombre, alerta 44 bis, [[icono, subcategoría, "Ingresar"]]]
 const C=[
 ["a","📣","Propaganda Electoral",0,[
@@ -209,11 +218,13 @@ const sv=()=>{try{localStorage.setItem("gastos2",JSON.stringify(G));localStorage
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
 const base=C.map((c,i)=>C.slice(0,i).reduce((a,x)=>a+x[4].length,0));
 const ti=(i,j)=>(TI[base[i]+j]||"").split(" ");
-const ct=c=>`${c[2]} letra ${c[0]}${A}`;
+const ct=c=>c[2];
 
 function showAl(auto){clearTimeout(alT);$("altx").textContent=ALERTA;$("al").hidden=false;if(auto)alT=setTimeout(hideAl,7000)}
 function hideAl(){clearTimeout(alT);$("al").hidden=true}
 $("alx").onclick=hideAl;
+let a2T;function showMin(){clearTimeout(a2T);$("al2").hidden=false;a2T=setTimeout(()=>$("al2").hidden=true,6000)}
+$("al2x").onclick=()=>$("al2").hidden=true;
 
 function cards(id,items){
   const g=$(id);g.innerHTML="";
@@ -226,7 +237,7 @@ function cards(id,items){
 function show(n){
   if(n<4)ed=null;
   ["s1","s2","s3","s4","s5"].forEach((id,i)=>$(id).hidden=(i+1)!==n);
-  if(n!==4)hideAl();
+  if(n!==4)hideAl();$("al2").hidden=true;
   const c=$("crumbs");c.innerHTML="";
   const L=[["Tipos de gasto",1]];
   if(ed&&n>=4)L.push(["Editar registro",n]);
@@ -263,6 +274,8 @@ const money=id=>$(id).addEventListener("input",e=>{const n=e.target.value.replac
 money("monto");money("imonto");
 $("ndoc").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
 $("arch").addEventListener("change",e=>{$("fl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
+$("inf").addEventListener("change",e=>{$("fl2").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
+$("f").addEventListener("reset",()=>{$("fl").textContent="";$("fl2").textContent=""});
 $("nIn").onclick=()=>{ed=null;$("fi").reset();clr();$("s5t").textContent="Registrar ingreso";W.fi.i=0;wz("fi");show(5)};
 const clr=()=>document.querySelectorAll(".err").forEach(e=>e.textContent="");
 const val=s=>+s.replace(/\D/g,"");
@@ -270,9 +283,11 @@ const val=s=>+s.replace(/\D/g,"");
 const W={f:{i:0},fi:{i:0}};
 const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
+const MON=id=>()=>{const v=val($(id).value);if(v>50000)return"";showMin();return"El monto debe ser mayor a $50.000."};
+const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return $("infs").value?"":"Seleccione el contenido del informe."};
 const V={
- f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),()=>val($("monto").value)?"":"Ingrese un monto mayor a cero.",()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo."],
- fi:[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),()=>val($("imonto").value)?"":"Ingrese un monto mayor a cero."]
+ f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
+ fi:[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),MON("imonto")]
 };
 function wz(id){
   const f=$(id),S=[...f.querySelectorAll(".stp")],i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
@@ -295,12 +310,12 @@ function next(id){
   f.querySelector("[data-w=cancel]").onclick=()=>show(id==="f"&&!ed?3:1);
 });
 function saveG(){
-  const arch=[...$("arch").files].map(f=>f.name),was=!!ed;
-  const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value};
+  const arch=[...$("arch").files].map(f=>f.name),inf=[...$("inf").files].map(f=>f.name),was=!!ed;
+  const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value,infs:$("infs").value};
   let a44;
-  if(ed){Object.assign(ed.rec,d);if(arch.length)ed.rec.arch=arch;a44=ed.rec.a44}
+  if(ed){Object.assign(ed.rec,d);if(arch.length)ed.rec.arch=arch;if(inf.length)ed.rec.inf=inf;a44=ed.rec.a44}
   else{const c=C[st.c],s=c[4][st.s];a44=!!c[3];
-    G.unshift({id:Date.now(),cat:"Letra "+c[0].toUpperCase()+" · "+c[2],sub:s[1],tipo:s[2].split(";")[st.t],a44,...d,arch})}
+    G.unshift({id:Date.now(),cat:"Letra "+c[0].toUpperCase()+" · "+c[2],sub:s[1],tipo:s[2].split(";")[st.t],a44,...d,arch,inf})}
   sv();render();show(1);toast(was?"Gasto actualizado":"Gasto registrado");if(a44)showAl(true);
 }
 function saveI(){
@@ -313,6 +328,7 @@ function editG(id){
   $("rut").value=r.rut;$("prov").value=r.prov;$("tdoc").value=r.tdoc;$("ndoc").value=r.ndoc;$("fecha").value=r.fecha;$("monto").value=r.monto.toLocaleString("es-CL");
   document.querySelector('input[name=pago][value="'+r.pago+'"]').checked=true;
   $("fl").textContent=r.arch.length?"Archivos actuales: "+r.arch.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
+  $("infs").value=r.infs||"";$("fl2").textContent=(r.inf&&r.inf.length)?"Informe actual: "+r.inf.join(" · ")+" (seleccione nuevos solo si desea reemplazarlo)":"";
   $("s4t").textContent="Editar: "+r.tipo;$("s4s").textContent=r.sub+" · "+r.cat;
   W.f.i=0;wz("f");show(4);if(r.a44)showAl(false);
 }
@@ -323,9 +339,10 @@ function editI(id){
 }
 
 const sum=(a,f)=>a.filter(f).reduce((t,r)=>t+r.monto,0);
+const SORT={g:"r",i:"r"};
 function render(){
   const iE=sum(IN,r=>r.tipo==="Efectivo"),iV=sum(IN,r=>r.tipo==="Valorizado"),
-        gE=sum(G,r=>r.pago==="Pago Efectivo"),gP=sum(G,r=>r.pago!=="Pago Efectivo");
+        gE=sum(G,r=>r.pago!=="Pendiente de Pago"),gP=sum(G,r=>r.pago==="Pendiente de Pago");
   const df=iE+iV-gE,dfe=$("dif");
   dfe.hidden=df===0;dfe.textContent=df>0?"Los Ingresos electorales son mayores que los gastos, favor corregir":"Los Gastos electorales son mayores que los ingresos, favor corregir";
   const c=v=>v==null?"—":fmt(v);
@@ -333,18 +350,20 @@ function render(){
   $("sm").innerHTML=row("Efectivos",iE,gE,iE-gE)+row("Valorizados (aportes en especies)",iV,null,iV)+row("Pendiente de pago",gP,gP,0)+row("Total",iE+iV+gP,gE+gP,iE+iV-gE,"tot");
   $("cnt").textContent=G.length+(G.length===1?" registro":" registros");
   const d=f=>f.split("-").reverse().join("/");
-  $("tb").innerHTML=G.length?G.map(r=>`<tr><td>${d(r.fecha)}</td>
+  const gs=SORT.g==="m"?[...G].sort((a,b)=>b.monto-a.monto):G;
+  $("tb").innerHTML=gs.length?gs.map(r=>`<tr><td>${d(r.fecha)}</td>
     <td><strong>${esc(r.tipo)}</strong><br><span class="mut">${esc(r.sub)}</span><br><span class="mut mm">${esc(r.cat)}</span></td>
     <td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td>
     <td>${esc(r.tdoc)}<br><span class="mm">N° ${esc(r.ndoc)}</span></td>
-    <td><span class="tag ${r.pago.startsWith("Pend")?"p":""}">${esc(r.pago)}</span></td>
-    <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}</td>
+    <td><span class="tag ${r.pago==="Pendiente de Pago"?"p":""}">${esc(r.pago)}</span></td>
+    <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}</span>`:""}</td>
     <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
-  const auto=G.filter(r=>r.pago!=="Pago Efectivo").map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`).join("");
-  $("ti").innerHTML=(IN.length||auto)?IN.map(r=>`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`).join("")+auto
-   :`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
+  const iR=IN.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
+    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}))
+   .concat(G.filter(r=>r.pago==="Pendiente de Pago").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`})));
+  if(SORT.i==="m")iR.sort((a,b)=>b.m-a.m);
+  $("ti").innerHTML=iR.length?iR.map(x=>x.h).join(""):`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
 document.addEventListener("click",e=>{
   const D=e.target.dataset;if(D.eg)return editG(D.eg);if(D.ei)return editI(D.ei);
@@ -359,6 +378,7 @@ $("csv").onclick=()=>{
   const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";"))).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv;charset=utf-8"}));a.download="gastos-electorales.csv";a.click();
 };
+document.querySelectorAll(".srt").forEach(s=>s.onchange=()=>{SORT[s.dataset.s]=s.value;render()});
 home();render();show(1);
 </script>
 </body>
