@@ -31,7 +31,8 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .opt:hover .cr{color:#fff}.opt:has(.cr){padding-bottom:30px}
 .difal{border:1px solid var(--navy);border-left:6px solid var(--red);background:#fff;padding:12px 16px;font-weight:600;margin-bottom:12px}
 .stp{max-width:520px}.stp label,.stp .lbl{font-size:1.05rem;margin-bottom:8px}fieldset.stp{margin-top:0;max-width:780px}.stp.mt{display:flex;gap:20px;align-items:flex-start;flex-wrap:wrap;max-width:860px}.mt>div{flex:1 1 260px}.mt>.err{flex:1 0 100%}
-.note{flex:1 1 240px;background:var(--navy);color:#fff;border-left:5px solid var(--red);padding:14px 16px;font-size:.9rem;font-weight:500;line-height:1.4}.srt{width:auto}select{text-overflow:ellipsis}
+.note{flex:1 1 240px;background:var(--navy);color:#fff;border-left:5px solid var(--red);padding:14px 16px;font-size:.9rem;font-weight:500;line-height:1.4}.srt{width:auto}.mt>.wide{flex:2 1 420px}
+ul.ck{list-style:circle;padding-left:22px}.ck li{margin-bottom:10px;font-size:.92rem;line-height:1.4}.ck li::marker{color:var(--navy)}.stp .ck label{display:flex;gap:8px;align-items:flex-start;font-size:.92rem;font-weight:400;margin:0;cursor:pointer}.ck input{width:auto;margin-top:3px;accent-color:var(--red)}select{text-overflow:ellipsis}
 .prog{flex:1 0 100%;font-family:var(--mono);font-size:.8rem;color:var(--mute)}
 .ed{background:none;border:0;color:var(--navy);cursor:pointer;font:inherit;text-decoration:underline;margin-right:12px}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
 .opt strong{display:block;font-weight:600;font-size:1rem;line-height:1.25;margin-bottom:6px}
@@ -115,17 +116,17 @@ fieldset{border:0;padding:0;margin-top:22px}
         <div class="stp"><label for="fecha">Ingrese la fecha del documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
         <div class="stp mt"><div><label for="monto">Ingrese el monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div><aside class="note">Recuerde que los gastos registrados deben ser justificados de acuerdo al valor de mercado</aside></div>
       </div>
-      <fieldset class="stp"><legend class="lbl">Seleccione la forma en que financió el gasto </legend>
-        <div class="pay"><label><input type="radio" name="pago" value="Aporte de mi propio bolsillo" checked> Aporte de mi propio bolsillo</label>
-        <label><input type="radio" name="pago" value="Aportado por otra persona conocida"> Aportado por otra persona conocida</label>
-        <label><input type="radio" name="pago" value="Aportado por otra persona desconocida"> Aportado por otra persona desconocida</label>
+      <fieldset class="stp"><legend class="lbl">Seleccione la forma de pago</legend>
+        <div class="pay"><label><input type="radio" name="pago" value="Pago Efectivo" checked> Pago Efectivo</label>
+        <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label>
+        <label><input type="radio" name="pago" value="Aporte de mi propio bolsillo"> Aporte de mi propio bolsillo</label>
+        <label><input type="radio" name="pago" value="Aportado por otra persona"> Aportado por otra persona</label>
         <label><input type="radio" name="pago" value="Aportado por el partido político"> Aportado por el partido político</label>
         <label><input type="radio" name="pago" value="Aportado por el Estado"> Aportado por el Estado</label>
-        <label><input type="radio" name="pago" value="Crédito de una institución financiera"> Crédito de una institución financiera</label>
-        <label><input type="radio" name="pago" value="Pendiente de pago"> Pendiente de pago</label></div></fieldset>
+        <label><input type="radio" name="pago" value="Crédito de una institución financiera"> Crédito de una institución financiera</label></div></fieldset>
       <div class="stp"><label for="arch">Adjunte los archivos de respaldo (factura, boleta, comprobante)</label>
         <input id="arch" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl"></div></div>
-      <div class="stp mt"><div><label for="inf">Adjunte el informe de actividades</label><input id="inf" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl2"></div></div><div><label for="infs">Contenido del informe</label><select id="infs"><option value="">Seleccione…</option><option value="a">a) Detalle de todas las actividades realizadas con el debido desarrollo que explique claramente el servicio prestado</option><option value="b">b) Medios de comprobación documental tales como, imágenes, capturas de pantalla, correos electrónicos, videos, folletos o cualquier otro</option><option value="c">c) Firma de recepción conforme del informe, por parte del administrador general electoral o administrador electoral</option><option value="d">d) Firma del proveedor de los servicios</option><option value="e">e) Indicar las fechas en las cuales se prestaron los servicios y/o se entregaron los bienes utilizados en la campaña electoral</option><option value="f">f) Justificación del valor de mercado pagado contra la prestación del servicio, mediante antecedentes o presupuestos, tales como, contrato de servicios, cuadros comparativos de valores, estudios de mercado, correos electrónicos o cualquier otro que acredite el citado valor</option></select></div><div class="err" id="e-inf"></div></div>
+      <div class="stp mt"><div><label for="inf">Adjunte el informe de actividades</label><input id="inf" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl2"></div></div><div class="wide"><div class="lbl">Contenido del informe (marque lo que incluye)</div><ul class="ck" id="infs"><li><label><input type="checkbox" value="a"><span><b>a) Detalle de las actividades realizadas:</b> Informe con el desarrollo y la descripción clara de los servicios prestados.</span></label></li><li><label><input type="checkbox" value="b"><span><b>b) Medios de comprobación documental:</b> Imágenes, capturas de pantalla, correos electrónicos, videos, folletos u otros antecedentes que acrediten los servicios.</span></label></li><li><label><input type="checkbox" value="c"><span><b>c) Firma de recepción conforme:</b> Firma del administrador general electoral o del administrador electoral, según corresponda.</span></label></li><li><label><input type="checkbox" value="d"><span><b>d) Firma del proveedor:</b> Firma del proveedor responsable de los servicios prestados.</span></label></li><li><label><input type="checkbox" value="e"><span><b>e) Fechas de prestación o entrega:</b> Registro de las fechas en que se prestaron los servicios o se entregaron los bienes utilizados en la campaña electoral.</span></label></li><li><label><input type="checkbox" value="f"><span><b>f) Justificación del valor de mercado:</b> Contratos, presupuestos, cuadros comparativos, estudios de mercado, correos electrónicos u otros antecedentes que permitan acreditar el valor pagado.</span></label></li></ul></div><div class="err" id="e-inf"></div></div>
       <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
   </section>
@@ -283,8 +284,8 @@ const val=s=>+s.replace(/\D/g,"");
 const W={f:{i:0},fi:{i:0}};
 const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
-const MON=id=>()=>{const v=val($(id).value);if(v>49999)return"";showMin();return"El monto debe ser mayor o igual a $50.000."};
-const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return $("infs").value?"":"Seleccione el contenido del informe."};
+const MON=id=>()=>{const v=val($(id).value);if(v>50000)return"";showMin();return"El monto debe ser mayor a $50.000."};
+const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return document.querySelector("#infs input:checked")?"":"Marque al menos un contenido del informe."};
 const V={
  f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
  fi:[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),MON("imonto")]
@@ -311,7 +312,7 @@ function next(id){
 });
 function saveG(){
   const arch=[...$("arch").files].map(f=>f.name),inf=[...$("inf").files].map(f=>f.name),was=!!ed;
-  const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value,infs:$("infs").value};
+  const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value,infs:[...document.querySelectorAll("#infs input:checked")].map(x=>x.value)};
   let a44;
   if(ed){Object.assign(ed.rec,d);if(arch.length)ed.rec.arch=arch;if(inf.length)ed.rec.inf=inf;a44=ed.rec.a44}
   else{const c=C[st.c],s=c[4][st.s];a44=!!c[3];
@@ -328,7 +329,7 @@ function editG(id){
   $("rut").value=r.rut;$("prov").value=r.prov;$("tdoc").value=r.tdoc;$("ndoc").value=r.ndoc;$("fecha").value=r.fecha;$("monto").value=r.monto.toLocaleString("es-CL");
   document.querySelector('input[name=pago][value="'+r.pago+'"]').checked=true;
   $("fl").textContent=r.arch.length?"Archivos actuales: "+r.arch.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
-  $("infs").value=r.infs||"";$("fl2").textContent=(r.inf&&r.inf.length)?"Informe actual: "+r.inf.join(" · ")+" (seleccione nuevos solo si desea reemplazarlo)":"";
+  {const s=[].concat(r.infs||[]);document.querySelectorAll("#infs input").forEach(x=>x.checked=s.includes(x.value))}$("fl2").textContent=(r.inf&&r.inf.length)?"Informe actual: "+r.inf.join(" · ")+" (seleccione nuevos solo si desea reemplazarlo)":"";
   $("s4t").textContent="Editar: "+r.tipo;$("s4s").textContent=r.sub+" · "+r.cat;
   W.f.i=0;wz("f");show(4);if(r.a44)showAl(false);
 }
@@ -356,7 +357,7 @@ function render(){
     <td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td>
     <td>${esc(r.tdoc)}<br><span class="mm">N° ${esc(r.ndoc)}</span></td>
     <td><span class="tag ${r.pago==="Pendiente de Pago"?"p":""}">${esc(r.pago)}</span></td>
-    <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}</span>`:""}</td>
+    <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}${[].concat(r.infs||[]).length?" ("+[].concat(r.infs).join(", ")+")":""}</span>`:""}</td>
     <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
    :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
   const iR=IN.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
