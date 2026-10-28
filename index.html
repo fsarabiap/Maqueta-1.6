@@ -116,14 +116,14 @@ fieldset{border:0;padding:0;margin-top:22px}
         <div class="stp"><label for="fecha">Ingrese la fecha del documento</label><input id="fecha" type="date"><div class="err" id="e-fecha"></div></div>
         <div class="stp mt"><div><label for="monto">Ingrese el monto (CLP)</label><input id="monto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-monto"></div></div><aside class="note">Recuerde que los gastos registrados deben ser justificados de acuerdo al valor de mercado</aside></div>
       </div>
-      <fieldset class="stp"><legend class="lbl">Seleccione la forma de pago</legend>
-        <div class="pay"><label><input type="radio" name="pago" value="Pago Efectivo" checked> Pago Efectivo</label>
-        <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label>
-        <label><input type="radio" name="pago" value="Aporte de mi propio bolsillo"> Aporte de mi propio bolsillo</label>
-        <label><input type="radio" name="pago" value="Aportado por otra persona"> Aportado por otra persona</label>
+      <fieldset class="stp"><legend class="lbl">Seleccione la forma en que fue financiado el gasto</legend>
+        <div class="pay"><label><input type="radio" name="pago" value="Aporte de mi propio bolsillo" checked> Aporte de mi propio bolsillo</label>
+        <label><input type="radio" name="pago" value="Aportado por otra persona conocida"> Aportado por otra persona conocida</label>
+        <label><input type="radio" name="pago" value="Aportado por otra persona desconocida"> Aportado por otra persona desconocida</label>
         <label><input type="radio" name="pago" value="Aportado por el partido político"> Aportado por el partido político</label>
         <label><input type="radio" name="pago" value="Aportado por el Estado"> Aportado por el Estado</label>
-        <label><input type="radio" name="pago" value="Crédito de una institución financiera"> Crédito de una institución financiera</label></div></fieldset>
+        <label><input type="radio" name="pago" value="Crédito de una institución financiera"> Crédito de una institución financiera</label>
+        <label><input type="radio" name="pago" value="Pendiente de Pago"> Pendiente de Pago</label></div></fieldset>
       <div class="stp"><label for="arch">Adjunte los archivos de respaldo (factura, boleta, comprobante)</label>
         <input id="arch" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl"></div></div>
       <div class="stp mt"><div><label for="inf">Adjunte el informe de actividades</label><input id="inf" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="fl2"></div></div><div class="wide"><div class="lbl">Contenido del informe (marque lo que incluye)</div><ul class="ck" id="infs"><li><label><input type="checkbox" value="a"><span><b>a) Detalle de las actividades realizadas:</b> Informe con el desarrollo y la descripción clara de los servicios prestados.</span></label></li><li><label><input type="checkbox" value="b"><span><b>b) Medios de comprobación documental:</b> Imágenes, capturas de pantalla, correos electrónicos, videos, folletos u otros antecedentes que acrediten los servicios.</span></label></li><li><label><input type="checkbox" value="c"><span><b>c) Firma de recepción conforme:</b> Firma del administrador general electoral o del administrador electoral, según corresponda.</span></label></li><li><label><input type="checkbox" value="d"><span><b>d) Firma del proveedor:</b> Firma del proveedor responsable de los servicios prestados.</span></label></li><li><label><input type="checkbox" value="e"><span><b>e) Fechas de prestación o entrega:</b> Registro de las fechas en que se prestaron los servicios o se entregaron los bienes utilizados en la campaña electoral.</span></label></li><li><label><input type="checkbox" value="f"><span><b>f) Justificación del valor de mercado:</b> Contratos, presupuestos, cuadros comparativos, estudios de mercado, correos electrónicos u otros antecedentes que permitan acreditar el valor pagado.</span></label></li></ul></div><div class="err" id="e-inf"></div></div>
@@ -284,7 +284,7 @@ const val=s=>+s.replace(/\D/g,"");
 const W={f:{i:0},fi:{i:0}};
 const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
-const MON=id=>()=>{const v=val($(id).value);if(v>50000)return"";showMin();return"El monto debe ser mayor a $50.000."};
+const MON=id=>()=>{const v=val($(id).value);if(v>49999)return"";showMin();return"El monto debe ser mayor a $50.000."};
 const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return document.querySelector("#infs input:checked")?"":"Marque al menos un contenido del informe."};
 const V={
  f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
