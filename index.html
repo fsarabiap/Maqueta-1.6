@@ -140,14 +140,29 @@ fieldset{border:0;padding:0;margin-top:22px}
 #al button,#al2 button{position:absolute;top:6px;right:8px;background:none;border:0;font-size:1.2rem;cursor:pointer;color:var(--navy)}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--navy);color:#fff;padding:12px 20px;border-left:5px solid var(--red);opacity:0;pointer-events:none;transition:opacity .2s}
 .toast.on{opacity:1}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.cd{display:flex;align-items:center;gap:14px;background:#11264A;border:1px solid #2B3D5C;border-left:5px solid var(--red);padding:10px 18px}
+.cdn{font-family:var(--mono);font-size:2.4rem;font-weight:700;line-height:1;color:#fff}
+.cdl b{display:block;font-size:.95rem;font-weight:600}.cdl small{display:block;color:#AEB9CC;font-family:var(--mono);font-size:.74rem;margin-top:2px}
+.cd.urg{background:var(--red);border-color:var(--red);border-left-color:#fff}.cd.urg small{color:#fff}
+#al3{position:relative;background:#fff;border:1px solid var(--red);border-left:6px solid var(--red);padding:14px 38px 14px 16px;font-size:.95rem;font-weight:700;color:var(--red);box-shadow:0 6px 24px rgba(10,27,51,.25)}
+#al3 button{position:absolute;top:6px;right:8px;background:none;border:0;font-size:1.2rem;cursor:pointer;color:var(--navy)}
+#fd .fields{max-width:none}#fd .stp{max-width:520px}#fd .stp.wd{max-width:none}
+.rt{min-width:820px}.rt td{padding:6px 6px;border-bottom:1px solid var(--rule)}.rt th{padding:8px 6px}.rt input{padding:8px 9px;min-width:110px}.rt td.rn{width:28px;color:var(--mute);vertical-align:middle}
+.rtf{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-top:12px;font-size:.92rem}
+.btn.on{background:var(--navy);color:#fff}
+.fasm{background:#fff;border:1px solid var(--rule);border-left:5px solid var(--navy);padding:10px 14px;font-size:.88rem;margin-bottom:10px}
+.vh{display:flex;align-items:center;gap:10px}.vh .chip{font-size:.75rem}
 [hidden]{display:none!important}
 </style>
 </head>
 <body>
-<header><div class="wrap"><h1>Sistema Registro y Presentación de Contabilidad Electoral – SIRPCE</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
+<header><div class="wrap hd"><div><h1>Sistema Registro y Presentación de Contabilidad Electoral – SIRPCE</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div>
+<div class="cd" id="cd" role="status" aria-live="polite"><span class="cdn" id="cdn">–</span><span class="cdl"><b id="cdt">días para la rendición</b><small>Fecha de rendición: 19-12-2026</small></span></div></div></header>
 <a id="ayuda" class="help" style="font-family:var(--sans)" href="https://www.servel.cl" target="_blank" rel="noopener noreferrer" hidden>❓ Necesitas ayuda con tu rendición</a>
 <div id="alc"><div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
-<div id="al2" role="alert" hidden><span>El monto ingresado debe ser mayor a $50.000</span><button type="button" aria-label="Cerrar" id="al2x">×</button></div></div>
+<div id="al2" role="alert" hidden><span>El monto ingresado debe ser mayor a $50.000</span><button type="button" aria-label="Cerrar" id="al2x">×</button></div>
+<div id="al3" role="alert" hidden><span>⚠️ Este gasto ya fue registrado</span><button type="button" aria-label="Cerrar" id="al3x">×</button></div></div>
 
 <main class="wrap">
   <nav class="crumbs" id="crumbs" aria-label="Ruta"></nav>
@@ -238,10 +253,12 @@ fieldset{border:0;padding:0;margin-top:22px}
       <div class="fields">
         <div class="stp"><label for="dtipo">Seleccione el tipo de ingreso</label><select id="dtipo"><option value="">Seleccione…</option><option>Donación Propia de la candidatura</option><option>Aportes de un tercero o persona natural</option><option>Donación del Partido</option></select></div>
         <div class="stp"><label for="dcat">Seleccione el tipo de aporte</label><select id="dcat"><option value="">Seleccione…</option><option>Registro de Brigadistas y Voluntarios</option><option>Registro de Sedes</option><option>Registro de Vehículos</option><option>Autorización de Propaganda en Espacios Privados</option><option>Declaración sobre Medios Digitales</option><option>Aportes en especies estimables en dinero</option></select></div>
-        <div class="stp"><label for="dap">Ingrese el nombre del aportante</label><input id="dap" autocomplete="off"></div>
-        <div class="stp"><label for="drut">Ingrese el RUT del aportante</label><input id="drut" placeholder="12.345.678-5" autocomplete="off"></div>
         <div class="stp"><label for="dfecha">Ingrese la fecha del aporte</label><input id="dfecha" type="date"></div>
-        <div class="stp"><label for="dmonto">Ingrese el monto valorizado a precio de mercado (CLP)</label><input id="dmonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"></div>
+        <div class="stp wd" id="drw"><div class="lbl" id="drl">Ingrese los registros</div><p class="sub" style="margin:0 0 10px">Agregue una fila por cada registro. El monto se valoriza a precio de mercado (CLP).</p>
+          <div class="tw"><table class="rt"><thead id="drh"></thead><tbody id="drb"></tbody></table></div>
+          <datalist id="tveh"><option value="Automóvil"><option value="Camioneta"><option value="Station wagon"><option value="Furgón"><option value="Van o minibús"><option value="Bus"><option value="Camión"><option value="Motocicleta"></datalist>
+          <div class="rtf"><button class="btn alt" type="button" id="dadd">+ Agregar registro</button><span><span id="dn">1 registro</span> · Total valorizado: <b class="mm2" id="dtot">$0</b></span></div><div class="err"></div></div>
+        <div class="stp"><label for="dadj">Adjunte documentos de respaldo (opcional)</label><input id="dadj" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="dfl"></div></div>
       </div>
       <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
@@ -250,8 +267,13 @@ fieldset{border:0;padding:0;margin-top:22px}
   <section class="log">
     <div class="bar"><div><h2>Ingresos registrados</h2></div><select class="srt" data-s="i" aria-label="Ordenar ingresos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select></div>
     <div class="tw"><table style="min-width:560px"><thead><tr><th>Fecha</th><th>Aportante</th><th>Tipo</th><th class="n">Monto</th><th></th></tr></thead><tbody id="ti"></tbody></table></div>
-    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="srt" data-s="g" aria-label="Ordenar gastos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select><button class="btn alt" id="csv" type="button">Exportar CSV</button></div></div>
+    <div class="bar" style="margin-top:36px"><div><h2 class="vh">🎁 Ingresos valorizados</h2><p class="sub" style="margin:0" id="cntiv"></p></div><select class="srt" data-s="iv" aria-label="Ordenar ingresos valorizados"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select></div>
+    <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Aportante</th><th>Tipo de aporte</th><th>Detalle</th><th>Adjuntos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tiv"></tbody></table></div>
+    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn alt" id="fas" type="button" aria-pressed="false">🏢 Ver Arrendamientos y Servicios prestados</button><select class="srt" data-s="g" aria-label="Ordenar gastos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select><button class="btn alt" id="csv" type="button">Exportar CSV</button></div></div>
+    <p class="fasm" id="fasm" hidden></p>
     <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+    <div class="bar" style="margin-top:36px"><div><h2 class="vh">🎁 Gastos valorizados</h2><p class="sub" style="margin:0" id="cntgv">Generados automáticamente por doble partida.</p></div><select class="srt" data-s="gv" aria-label="Ordenar gastos valorizados"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select></div>
+    <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Aportante</th><th>Detalle</th><th>Adjuntos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tgv"></tbody></table></div>
   </section>
 </main>
 <div class="toast" id="toast" role="status"></div>
@@ -328,6 +350,13 @@ function hideAl(){clearTimeout(alT);$("al").hidden=true}
 $("alx").onclick=hideAl;
 let a2T;function showMin(){clearTimeout(a2T);$("al2").hidden=false;a2T=setTimeout(()=>$("al2").hidden=true,6000)}
 $("al2x").onclick=()=>$("al2").hidden=true;
+let a3T;function showDup(){clearTimeout(a3T);$("al3").hidden=false;a3T=setTimeout(()=>$("al3").hidden=true,7000)}
+$("al3x").onclick=()=>$("al3").hidden=true;
+// Contador de días para la rendición (19-12-2026)
+function cdUpd(){const t=new Date(),n=Math.round((Date.UTC(2026,11,19)-Date.UTC(t.getFullYear(),t.getMonth(),t.getDate()))/864e5);
+  $("cdn").textContent=Math.max(n,0);$("cdt").textContent=n>1?"días para la rendición":n===1?"día para la rendición":n===0?"Hoy vence la rendición":"Plazo de rendición vencido";
+  $("cd").classList.toggle("urg",n<=7)}
+cdUpd();setInterval(cdUpd,36e5);
 
 function cards(id,items){
   const g=$(id);g.innerHTML="";
@@ -341,7 +370,7 @@ function show(n){
   if(n<4)ed=null;
   ["s0","s1","s2","s3","s4","s5","s6","s7"].forEach((id,i)=>$(id).hidden=i!==n);
   $("ayuda").hidden=!((n>=1&&n<=4)||(n===6&&pv&&pv.id==="f"));
-  if(n!==4)hideAl();$("al2").hidden=true;
+  if(n!==4)hideAl();$("al2").hidden=true;$("al3").hidden=true;
   const c=$("crumbs");c.innerHTML="";
   const L=[["Inicio",0]];
   if(n===5||n===7)L.push([ed?"Editar registro":$(n===5?"s5t":"s7t").textContent,n]);
@@ -376,8 +405,8 @@ function dv(b){let s=0,m=2;for(let i=b.length-1;i>=0;i--){s+=+b[i]*m;m=m===7?2:m
 function fmtRut(v){v=cleanRut(v);if(v.length<2)return v;return v.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,".")+"-"+v.slice(-1)}
 function rutOk(v){v=cleanRut(v);return v.length>=8&&dv(v.slice(0,-1))===v.slice(-1)}
 const money=id=>$(id).addEventListener("input",e=>{const n=e.target.value.replace(/\D/g,"");e.target.value=n?Number(n).toLocaleString("es-CL"):""});
-["rut","irut","drut"].forEach(id=>$(id).addEventListener("input",e=>e.target.value=fmtRut(e.target.value)));
-money("monto");money("imonto");money("dmonto");money("cbruto");
+["rut","irut"].forEach(id=>$(id).addEventListener("input",e=>e.target.value=fmtRut(e.target.value)));
+money("monto");money("imonto");money("cbruto");
 const tot=()=>{const b=val($("cbruto").value),n=val($("cint").value);$("ctot").value=(b||n)?fmt(b+n):""};
 $("cbruto").addEventListener("input",tot);
 $("cint").addEventListener("input",e=>{const n=e.target.value.replace(/\D/g,"");e.target.value=n===""?"":Number(n).toLocaleString("es-CL");tot()});
@@ -388,11 +417,43 @@ $("ndoc").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/
 $("arch").addEventListener("change",e=>{$("fl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
 $("inf").addEventListener("change",e=>{$("fl2").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
 $("f").addEventListener("reset",()=>{$("fl").textContent="";$("fl2").textContent=""});
+// Registros múltiples de aportes valorizados
+const DF={
+ "Registro de Brigadistas y Voluntarios":[["rut","Rut"],["ap","Nombre"],["dir","Dirección"],["com","Comuna"]],
+ "Registro de Sedes":[["rut","Rut"],["ap","Nombre del propietario"],["dir","Dirección"],["com","Comuna"]],
+ "Registro de Vehículos":[["rut","Rut"],["ap","Nombre del propietario"],["pla","Placa Única"],["tv","Tipo Vehículo"]],
+ "Autorización de Propaganda en Espacios Privados":[["rut","Rut"],["ap","Nombre del propietario"],["dir","Dirección"],["com","Comuna"]],
+ "Declaración sobre Medios Digitales":[["rut","Rut"],["ap","Nombre"],["med","Medio digital o plataforma"],["des","Descripción"]],
+ "Aportes en especies estimables en dinero":[["rut","Rut Donante"],["ap","Nombre"],["ta","Tipo de Aporte"],["cant","Cantidad"]]
+};
+const dF=c=>(DF[c===undefined?$("dcat").value:c]||[["rut","Rut"],["ap","Nombre"]]).concat([["monto","Monto de la donación"]]);
+let dCat=null;
+function dRow(v){v=v||{};const tr=document.createElement("tr");
+  tr.innerHTML='<td class="mm rn"></td>'+dF().map(([k,l])=>{const x=v[k]==null||v[k]===""?"":k==="monto"?Number(v[k]).toLocaleString("es-CL"):v[k];
+    return `<td><input data-k="${k}" aria-label="${esc(l)}" autocomplete="off"${k==="rut"?' placeholder="12.345.678-5"':""}${k==="monto"||k==="cant"?' class="m" inputmode="numeric"':""}${k==="monto"?' placeholder="0"':""}${k==="pla"?' placeholder="ABCD12"':""}${k==="tv"?' list="tveh"':""} value="${esc(x)}"></td>`}).join("")+'<td><button type="button" class="del" data-rm="1">Quitar</button></td>';
+  $("drb").append(tr);dNum()}
+function dRows(){return[...$("drb").rows].map(tr=>{const o={};tr.querySelectorAll("input").forEach(x=>o[x.dataset.k]=x.dataset.k==="monto"?val(x.value):x.value.trim());return o})}
+function dNum(){const R=[...$("drb").rows];R.forEach((r,i)=>{r.cells[0].textContent=i+1;r.querySelector("[data-rm]").hidden=R.length===1});
+  $("dn").textContent=R.length+(R.length===1?" registro":" registros");$("dtot").textContent=fmt(dRows().reduce((t,r)=>t+r.monto,0))}
+function dReset(rows){dCat=$("dcat").value;$("drl").textContent=dCat?"Ingrese los registros · "+dCat:"Ingrese los registros";
+  $("drh").innerHTML="<tr><th>#</th>"+dF().map(([k,l])=>`<th${k==="monto"?' class="n"':""}>${esc(l)}</th>`).join("")+"<th></th></tr>";
+  $("drb").innerHTML="";(rows&&rows.length?rows:[{}]).forEach(dRow)}
+$("drb").addEventListener("input",e=>{const x=e.target,k=x.dataset.k;
+  if(k==="rut")x.value=fmtRut(x.value);
+  if(k==="monto"){const n=x.value.replace(/\D/g,"");x.value=n?Number(n).toLocaleString("es-CL"):""}
+  if(k==="cant")x.value=x.value.replace(/\D/g,"");
+  if(k==="pla")x.value=x.value.toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,6);
+  dNum()});
+$("drb").addEventListener("click",e=>{if(e.target.dataset.rm){e.target.closest("tr").remove();dNum()}});
+$("dadd").onclick=()=>{dRow();const r=$("drb").rows;r[r.length-1].querySelector("input").focus()};
+$("dadj").addEventListener("change",e=>{$("dfl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
+$("fd").addEventListener("reset",()=>{$("dfl").textContent=""});
+const dDet=r=>{const d=r.det||{};return(DF[r.dcat]||[]).filter(([k])=>k!=="rut"&&k!=="ap"&&d[k]).map(([k,l])=>l+": "+d[k]).join(" · ")};
 function openIn(){
   ed=null;$("fi").reset();clr();$("s5t").textContent="Registrar un ingreso";
   $("s5s").textContent="Aportes recibidos por la campaña.";W.fi.i=0;wz("fi");show(5);
 }
-function openD(){ed=null;$("fd").reset();clr();$("s7t").textContent="Registrar un bien o servicio donado";W.fd.i=0;wz("fd");show(7)}
+function openD(){ed=null;$("fd").reset();clr();dCat=null;$("s7t").textContent="Registrar un bien o servicio donado";W.fd.i=0;wz("fd");show(7)}
 $("q1").onclick=()=>show(1);$("q2").onclick=openIn;$("q3").onclick=openD;
 const clr=()=>document.querySelectorAll(".err").forEach(e=>e.textContent="");
 const val=s=>+s.replace(/\D/g,"");
@@ -402,22 +463,31 @@ const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
 const MON=id=>()=>{const v=val($(id).value);if(v>49999)return"";showMin();return"El monto debe ser mayor a $50.000."};
 const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return document.querySelector("#infs input:checked")?"":"Marque al menos un contenido del informe."};
+const DUP=()=>{const key=(rut,f,n,m)=>[cleanRut(rut),f,String(n).replace(/^0+/,""),m].join("|"),k=key($("rut").value,$("fecha").value,$("ndoc").value,val($("monto").value));
+  if(!G.some(r=>(!ed||r!==ed.rec)&&key(r.rut,r.fecha,r.ndoc,r.monto)===k))return"";showDup();return"Este gasto ya fue registrado."};
+const DROWS=()=>{const F=dF(),RW=dRows();
+  for(let i=0;i<RW.length;i++){const r=RW[i];for(const[k,l]of F){
+    if(k==="rut"){if(!rutOk(r.rut))return`Registro ${i+1}: ingrese un ${l} válido.`}
+    else if(k==="monto"){if(!(r.monto>0))return`Registro ${i+1}: ingrese el monto de la donación.`}
+    else if(!r[k])return`Registro ${i+1}: complete «${l}».`}}
+  if(RW.reduce((a,r)=>a+r.monto,0)>49999)return"";showMin();return"El monto total debe ser mayor a $50.000."};
 const VI_E=[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),MON("imonto")];
 const VI_C=[()=>"",NE("cdoc","Ingrese el número de documento."),NE("cfecha","Ingrese la fecha del mandato."),NE("cinst","Ingrese la institución financiera."),NE("ccta","Ingrese la cuenta bancaria."),MON("cbruto"),()=>$("cint").value.trim()===""?"Ingrese los intereses (puede ser 0).":"",()=>($("cadj").files.length||(ed&&ed.rec&&ed.rec.cred&&ed.rec.cred.adj.length))?"":"Adjunte el archivo del crédito."];
 const V={
- f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
+ f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),()=>MON("monto")()||DUP(),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
  fi:()=>$("itipo").value==="Crédito con mandato"?VI_C:VI_E,
- fd:[NE("dtipo","Seleccione el tipo de ingreso."),NE("dcat","Seleccione el tipo de aporte."),NE("dap","Ingrese el nombre del aportante."),R("drut","Ingrese un RUT válido."),NE("dfecha","Seleccione la fecha."),MON("dmonto")]
+ fd:[NE("dtipo","Seleccione el tipo de ingreso."),NE("dcat","Seleccione el tipo de aporte."),NE("dfecha","Seleccione la fecha."),DROWS,()=>""]
 };
 const steps=id=>{const m=id==="fi"&&$("itipo").value==="Crédito con mandato"?"c":"e";return[...$(id).querySelectorAll(".stp")].filter(s=>!s.dataset.m||s.dataset.m===m)};
 function wz(id){
   const f=$(id),S=steps(id),i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
+  if(id==="fd"&&S[i].id==="drw"&&dCat!==$("dcat").value)dReset();
   f.querySelectorAll(".stp").forEach(s=>s.hidden=true);
   S.forEach((s,k)=>{s.hidden=k!==i;if(!s.querySelector(".err")){const e=document.createElement("div");e.className="err";s.append(e)}});
   q("prev").hidden=i===0;
   q("next").textContent=i===S.length-1?"Vista previa":"Siguiente";
   q("prog").textContent="Paso "+(i+1)+" de "+S.length;
-  const x=S[i].querySelector("input:not([type=radio]),select");if(x&&x.type!=="file")x.focus();
+  const x=S[i].querySelector("input:not([type=radio]):not([readonly]),select");if(x&&x.type!=="file")x.focus();
 }
 function next(id){
   const S=steps(id),i=W[id].i,vs=typeof V[id]==="function"?V[id]():V[id],m=vs[i]();
@@ -444,7 +514,10 @@ function preview(id){
       ["Archivos",(ar.length?ar:(r?r.arch:[])).join(" · ")],["Informe de actividades",(inf.length?inf:(r&&r.inf?r.inf:[])).join(" · ")+(ix?" ("+ix+")":"")]];
     ok=saveG;
   }else if(id==="fd"){
-    rows=[["Tipo de ingreso",$("dtipo").value],["Tipo de aporte",$("dcat").value],["Aportante",$("dap").value],["RUT aportante",$("drut").value],["Fecha",dmy($("dfecha").value)],["Monto valorizado",fmt(val($("dmonto").value)),1],["Registro automático","Se generará el gasto valorizado por el mismo monto"]];
+    const RW=dRows(),F=dF().filter(([k])=>k!=="monto"),t=RW.reduce((a,r)=>a+r.monto,0),ad=[...$("dadj").files].map(f=>f.name);
+    rows=[["Tipo de ingreso",$("dtipo").value],["Tipo de aporte",$("dcat").value],["Fecha",dmy($("dfecha").value)]]
+      .concat(RW.map((r,i)=>["Registro "+(i+1),F.map(([k,l])=>l+": "+r[k]).join(" · ")+" — "+fmt(r.monto)]))
+      .concat([["Total valorizado",fmt(t),1],["Documentos adjuntos",(ad.length?ad:(ed&&ed.rec.adj?ed.rec.adj:[])).join(" · ")],["Registro automático",RW.length===1?"Se generará el gasto valorizado por el mismo monto":"Se generarán "+RW.length+" gastos valorizados por el mismo monto total"]]);
     ok=saveD;
   }else if($("itipo").value==="Crédito con mandato"){
     const b=val($("cbruto").value),n=val($("cint").value),ad=[...$("cadj").files].map(f=>f.name);
@@ -480,9 +553,12 @@ function saveI(){
   sv();render();show(0);toast(was?"Ingreso actualizado":"Ingreso registrado");
 }
 function saveD(){
-  const was=!!ed,d={tipo:"Valorizado",dtipo:$("dtipo").value,dcat:$("dcat").value,ap:$("dap").value.trim(),rut:$("drut").value,fecha:$("dfecha").value,monto:val($("dmonto").value)};
-  if(ed)Object.assign(ed.rec,d);else IN.unshift({id:Date.now(),...d});
-  sv();render();show(0);toast(was?"Aporte actualizado":"Aporte registrado: ingreso y gasto valorizado");
+  const was=!!ed,RW=dRows(),nf=[...$("dadj").files].map(f=>f.name),now=Date.now();
+  const b={tipo:"Valorizado",dtipo:$("dtipo").value,dcat:$("dcat").value,fecha:$("dfecha").value,adj:nf.length?nf:(ed&&ed.rec.adj?ed.rec.adj:[]),lote:(ed&&ed.rec.lote)||now};
+  const mk=r=>{const{rut,ap,monto,...det}=r;return{...b,rut,ap,monto,det}};
+  let k0=0;if(ed){Object.assign(ed.rec,mk(RW[0]));k0=1}
+  RW.slice(k0).reverse().forEach((r,k)=>IN.unshift({id:now+k+1,...mk(r)}));
+  sv();render();show(0);toast(was?"Aporte actualizado":RW.length+(RW.length===1?" registro valorizado guardado":" registros valorizados guardados")+": ingreso y gasto");
 }
 function editG(id){
   const r=G.find(x=>x.id==id);if(!r)return;ed={k:"g",rec:r};$("f").reset();clr();
@@ -497,7 +573,8 @@ function editI(id){
   const r=IN.find(x=>x.id==id);if(!r)return;ed={k:"i",rec:r};
   const nf=n=>n.toLocaleString("es-CL");
   if(r.tipo==="Valorizado"){
-    $("fd").reset();clr();$("dtipo").value=r.dtipo||"";$("dcat").value=r.dcat||"";$("dap").value=r.ap;$("drut").value=r.rut;$("dfecha").value=r.fecha;$("dmonto").value=nf(r.monto);
+    $("fd").reset();clr();$("dtipo").value=r.dtipo||"";$("dcat").value=r.dcat||"";$("dfecha").value=r.fecha;dReset([{rut:r.rut,ap:r.ap,monto:r.monto,...(r.det||{})}]);
+    $("dfl").textContent=r.adj&&r.adj.length?"Archivos actuales: "+r.adj.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
     $("s7t").textContent="Editar aporte valorizado";W.fd.i=0;wz("fd");show(7);return;
   }
   $("fi").reset();clr();$("itipo").value=r.tipo==="Crédito con mandato"?r.tipo:"Efectivo";
@@ -509,7 +586,8 @@ function editI(id){
 }
 
 const sum=(a,f)=>a.filter(f).reduce((t,r)=>t+r.monto,0);
-const SORT={g:"r",i:"r"};
+const SORT={g:"r",i:"r",iv:"r",gv:"r"};let FAS=false;
+const isAS=r=>/^Letra [CD] /.test(r.cat);
 function render(){
   const iE=sum(IN,r=>r.tipo!=="Valorizado"),iV=sum(IN,r=>r.tipo==="Valorizado"),
         gE=sum(G,r=>r.pago!=="Pendiente de Pago"),gP=sum(G,r=>r.pago==="Pendiente de Pago");
@@ -521,23 +599,35 @@ function render(){
   $("td").classList.toggle("ok",df===0);
   $("cnt").textContent=G.length+(G.length===1?" registro":" registros");
   const d=f=>f.split("-").reverse().join("/");
-  const tl=r=>r.tipo==="Valorizado"?"Valorizado (especies)":r.tipo==="Crédito con mandato"?"Crédito con mandato":"Efectivo";
-  const gR=G.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
+  const tl=r=>r.tipo==="Crédito con mandato"?"Crédito con mandato":"Efectivo";
+  const VZ=IN.filter(r=>r.tipo==="Valorizado"),adjH=r=>r.adj&&r.adj.length?r.adj.map(esc).join("<br>"):"—";
+  const GS=FAS?G.filter(isAS):G;
+  if(FAS){const a=G.filter(r=>/^Letra C /.test(r.cat)),s2=G.filter(r=>/^Letra D /.test(r.cat));
+    $("fasm").innerHTML=`Mostrando <b>Arrendamientos de bienes muebles o inmuebles</b> (${a.length} · ${fmt(sum(a,()=>1))}) y <b>Servicios prestados</b> (${s2.length} · ${fmt(sum(s2,()=>1))}). Total: <b class="mm2">${fmt(sum(GS,()=>1))}</b>`}
+  $("fasm").hidden=!FAS;
+  const gR=GS.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
     <td><strong>${esc(r.tipo)}</strong><br><span class="mut">${esc(r.sub)}</span><br><span class="mut mm">${esc(r.cat)}</span></td>
     <td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td>
     <td>${esc(r.tdoc)}<br><span class="mm">N° ${esc(r.ndoc)}</span></td>
     <td><span class="tag ${r.pago==="Pendiente de Pago"?"p":""}">${esc(r.pago)}</span></td>
     <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}${[].concat(r.infs||[]).length?" ("+[].concat(r.infs).join(", ")+")":""}</span>`:""}</td>
     <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`}))
-   .concat(IN.filter(r=>r.tipo==="Valorizado").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
+   ;
+  const gvR=VZ.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
     <td><strong>Gasto valorizado</strong><br><span class="mut">${esc(r.dcat||"Aporte en especies")}</span></td>
-    <td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td><td>—</td>
-    <td><span class="tag">Valorizado</span></td><td>—</td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`})));
+    <td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td><td>${esc(dDet(r))||"—"}</td>
+    <td>${adjH(r)}</td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`}));
+  const ivR=VZ.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
+    <td><strong>${esc(r.dcat||"Aporte en especies")}</strong><br><span class="mut mm">${esc(r.dtipo||"")}</span></td><td>${esc(dDet(r))||"—"}</td>
+    <td>${adjH(r)}</td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}));
   const so=(a,k)=>{if(k==="m")a.sort((x,y)=>y.m-x.m);if(k==="a")a.sort((x,y)=>x.m-y.m);return a};
   $("cnt").textContent=gR.length+(gR.length===1?" registro":" registros");
-  $("tb").innerHTML=gR.length?so(gR,SORT.g).map(x=>x.h).join(""):`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
-  const iR=IN.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut||(r.cred?"Doc N° "+r.cred.doc:""))}</span></td>
-    <td><span class="tag">${tl(r)}</span>${r.tipo==="Valorizado"&&r.dcat?`<br><span class="mut mm">${esc(r.dcat)}</span>`:""}</td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}))
+  $("tb").innerHTML=gR.length?so(gR,SORT.g).map(x=>x.h).join(""):`<tr><td colspan="8" class="empty">${FAS?"No hay gastos en Arrendamientos ni Servicios prestados.":"Aún no hay gastos registrados."}</td></tr>`;
+  $("tgv").innerHTML=gvR.length?so(gvR,SORT.gv).map(x=>x.h).join(""):`<tr><td colspan="7" class="empty">Aún no hay gastos valorizados.</td></tr>`;
+  $("tiv").innerHTML=ivR.length?so(ivR,SORT.iv).map(x=>x.h).join(""):`<tr><td colspan="7" class="empty">Aún no hay ingresos valorizados.</td></tr>`;
+  const vt=VZ.length+(VZ.length===1?" registro":" registros")+" · "+fmt(iV);$("cntiv").textContent=vt;$("cntgv").textContent=vt+" · generados automáticamente por doble partida";
+  const iR=IN.filter(r=>r.tipo!=="Valorizado").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut||(r.cred?"Doc N° "+r.cred.doc:""))}</span></td>
+    <td><span class="tag">${tl(r)}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}))
    .concat(G.filter(r=>r.pago==="Pendiente de Pago").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`})));
   $("ti").innerHTML=iR.length?so(iR,SORT.i).map(x=>x.h).join(""):`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
@@ -551,9 +641,10 @@ $("csv").onclick=()=>{
   if(!G.length&&!IN.some(r=>r.tipo==="Valorizado"))return toast("No hay gastos para exportar");
   const h=["Fecha","Categoría","Subcategoría","Tipo de gasto","Rut proveedor","Proveedor","Tipo de documento","N° documento","Monto","Forma de pago","Archivos"];
   const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";")),IN.filter(r=>r.tipo==="Valorizado").map(r=>[r.fecha,"Gasto valorizado",r.dcat||"",r.dtipo||"",r.rut,r.ap,"—","—",r.monto,"Valorizado",""].map(q).join(";"))).join("\n");
+  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";")),IN.filter(r=>r.tipo==="Valorizado").map(r=>[r.fecha,"Gasto valorizado",r.dcat||"",r.dtipo||"",r.rut,r.ap,"—","—",r.monto,"Valorizado",(r.adj||[]).join(" | ")].map(q).join(";"))).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv;charset=utf-8"}));a.download="gastos-electorales.csv";a.click();
 };
+$("fas").onclick=()=>{FAS=!FAS;$("fas").classList.toggle("on",FAS);$("fas").setAttribute("aria-pressed",FAS);$("fas").textContent=FAS?"✖️ Ver todos los gastos":"🏢 Ver Arrendamientos y Servicios prestados";render()};
 document.querySelectorAll(".srt").forEach(s=>s.onchange=()=>{SORT[s.dataset.s]=s.value;render()});
 home();render();show(0);
 </script>
