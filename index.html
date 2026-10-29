@@ -9,7 +9,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 :root{--navy:#0A1B33;--red:#D3202B;--paper:#F3F4F6;--white:#fff;--mute:#5B6778;--rule:#C9CED6;
---sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+--emoji:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji";--sans:"Instrument Sans",system-ui,-apple-system,"Segoe UI",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji";--mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
 *{box-sizing:border-box;margin:0}
 body{font-family:var(--sans);background:var(--paper);color:var(--navy);line-height:1.45}
 header{background:var(--navy);color:#fff;border-bottom:6px solid var(--red)}
@@ -38,7 +38,7 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .qs{display:flex;flex-direction:column;gap:12px;margin-top:20px}
 .qo{display:flex;gap:16px;align-items:flex-start;text-align:left;font:inherit;color:var(--navy);background:#fff;border:1px solid #D5DAE2;border-radius:14px;padding:18px 20px;cursor:pointer}
 .qo:hover{border-color:var(--navy);box-shadow:0 2px 10px rgba(10,27,51,.12)}
-.qi{font-size:1.4rem;line-height:1;filter:grayscale(1);font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.qi{font-size:1.4rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
 .qo strong{display:block;font-size:1.05rem;margin-bottom:2px}
 .qd{display:block;color:var(--mute);font-size:.92rem;margin-bottom:10px}
 .chip{display:inline-block;font-size:.8rem;font-weight:600;padding:3px 10px;border-radius:6px}
@@ -55,8 +55,8 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .op:hover{filter:brightness(.96)}
 .op1{background:#fff;color:var(--navy);box-shadow:0 12px 30px rgba(10,27,51,.14)}
 .op2{background:var(--red);color:#fff}
-.oi{width:56px;height:56px;border:1px solid var(--rule);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex:none;filter:grayscale(1);font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
-.op2 .oi{background:transparent;border-color:rgba(255,255,255,.6);filter:grayscale(1) brightness(0) invert(1)}
+.oi{width:56px;height:56px;border:1px solid var(--rule);background:var(--paper);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex:none;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif}
+.op2 .oi{background:#fff;border-color:rgba(255,255,255,.6);}
 .ot small,.rf small,.sh small,.sb dt{font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase}
 .ot small{display:block;opacity:.7;margin-bottom:6px}
 .ot strong{display:block;font-size:1.5rem;font-weight:700;letter-spacing:-.02em;line-height:1.15}
@@ -71,7 +71,7 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .sc{background:#fff;border:1px solid #D5DAE2;border-top:3px solid var(--navy);padding:22px}
 .sc.b{border-top-color:var(--red)}
 .sh{display:flex;align-items:center;gap:12px;margin-bottom:18px}
-.si{width:42px;height:42px;background:#EEF1F6;display:flex;align-items:center;justify-content:center;font-size:1.1rem;filter:grayscale(1)}
+.si{font-family:var(--emoji),sans-serif;width:42px;height:42px;background:#EEF1F6;display:flex;align-items:center;justify-content:center;font-size:1.1rem;}
 .sc.b .si{background:#FBE9EA}
 .sh small,.sb dt{color:var(--mute)}
 .sn{font-size:1.15rem;color:#33415A;margin-bottom:6px}
@@ -84,13 +84,21 @@ h2{font-size:1.25rem;font-weight:600;margin-bottom:4px}
 .sc.d .sh small{color:#AEB9CC}
 .sc.d .sv{margin-top:6px;border-bottom:1px solid #2B3D5C;padding-bottom:18px}
 .sc.d p{color:#FF6B78;font-size:.92rem;margin:0}
-.sc.d.ok p{color:#8EE4A4}.mt>.wide{flex:2 1 420px}
+.sc.d.ok p{color:#8EE4A4}
+.op3{background:var(--navy);color:#fff}.op3 .oi{background:#fff;border-color:#fff}
+.help{position:fixed;right:0;top:50%;transform:translateY(-50%);z-index:40;background:var(--red);color:#fff;text-decoration:none;font-weight:700;font-size:.88rem;padding:16px 10px;writing-mode:vertical-rl;box-shadow:-4px 4px 16px rgba(10,27,51,.25)}
+.help:hover{background:#B01822}
+.pvw{background:#fff;border:1px solid var(--rule);border-top:2px solid var(--navy);padding:26px;max-width:760px}
+.pq{font-size:1.4rem;margin-bottom:16px}
+.pv{display:grid;grid-template-columns:minmax(130px,220px) 1fr;gap:10px 18px;margin:0 0 8px}
+.pv dt{color:var(--mute);font-size:.88rem}.pv dd{margin:0;font-weight:500;word-break:break-word}
+.mm2{font-family:var(--mono);font-weight:700}.mt>.wide{flex:2 1 420px}
 ul.ck{list-style:circle;padding-left:22px}.ck li{margin-bottom:10px;font-size:.92rem;line-height:1.4}.ck li::marker{color:var(--navy)}.stp .ck label{display:flex;gap:8px;align-items:flex-start;font-size:.92rem;font-weight:400;margin:0;cursor:pointer}.ck input{width:auto;margin-top:3px;accent-color:var(--red)}select{text-overflow:ellipsis}
 .prog{flex:1 0 100%;font-family:var(--mono);font-size:.8rem;color:var(--mute)}
-.ed{background:none;border:0;color:var(--navy);cursor:pointer;font:inherit;text-decoration:underline;margin-right:12px}.opt:hover .ic{filter:grayscale(1) brightness(1.8)}
+.ed{background:none;border:0;color:var(--navy);cursor:pointer;font:inherit;text-decoration:underline;margin-right:12px}.opt:hover .ic{}
 .opt strong{display:block;font-weight:600;font-size:1rem;line-height:1.25;margin-bottom:6px}
 .opt em{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--red)}
-.ic{display:block;font-size:1.7rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;filter:grayscale(1) contrast(1.1)}
+.ic{display:block;font-size:1.7rem;line-height:1;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif;}
 .sumbox{margin-bottom:32px}
 .tw{overflow-x:auto;background:#fff;border-top:2px solid var(--navy)}
 table{width:100%;border-collapse:collapse;font-size:.88rem}
@@ -136,6 +144,7 @@ fieldset{border:0;padding:0;margin-top:22px}
 </head>
 <body>
 <header><div class="wrap"><h1>Sistema Registro y Presentación de Contabilidad Electoral – SIRPCE</h1><p>Control de ingresos y gastos electorales · Ley N°19.884</p></div></header>
+<a id="ayuda" class="help" style="font-family:var(--sans)" href="https://www.servel.cl" target="_blank" rel="noopener noreferrer" hidden>❓ Necesitas ayuda con tu rendición</a>
 <div id="alc"><div id="al" role="alert" hidden><span id="altx"></span><button type="button" aria-label="Cerrar" id="alx">×</button></div>
 <div id="al2" role="alert" hidden><span>El monto ingresado debe ser mayor a $50.000</span><button type="button" aria-label="Cerrar" id="al2x">×</button></div></div>
 
@@ -146,6 +155,7 @@ fieldset{border:0;padding:0;margin-top:22px}
     <div class="opts2">
       <button class="op op1" id="q2" type="button"><span class="oi" aria-hidden="true">👛</span><span class="ot"><small>Opción 01</small><strong>Registrar un ingreso</strong><em>Aportes, créditos y otros ingresos electorales</em></span><span class="ar" aria-hidden="true">→</span></button>
       <button class="op op2" id="q1" type="button"><span class="oi" aria-hidden="true">🧾</span><span class="ot"><small>Opción 02</small><strong>Rendir un gasto</strong><em>Documentos, servicios y gastos de campaña</em></span><span class="ar" aria-hidden="true">→</span></button>
+      <button class="op op3" id="q3" type="button"><span class="oi" aria-hidden="true">🎁</span><span class="ot"><small>Opción 03</small><strong>Registrar un bien o servicio donado</strong><em>Donaciones en especies o servicios, a valor de mercado</em></span><span class="ar" aria-hidden="true">→</span></button>
     </div>
     <div class="rf"><small>Resumen financiero</small>
       <div class="rfh"><h2>Ingresos y gastos</h2><span class="live"><i></i>Actualizado ahora</span></div></div>
@@ -198,20 +208,48 @@ fieldset{border:0;padding:0;margin-top:22px}
     <h2 id="s5t">Registrar ingreso</h2><p class="sub" id="s5s">Aportes recibidos por la campaña.</p>
     <form id="fi" novalidate>
       <div class="fields">
-        <div class="stp"><label for="itipo">Seleccione el tipo de ingreso</label><select id="itipo"><option value="Efectivo">Efectivo (dinero)</option><option value="Valorizado">Valorizado (aporte en especies)</option></select></div>
-        <div class="stp"><label for="iap">Ingrese el nombre del aportante</label><input id="iap" autocomplete="off"><div class="err" id="e-iap"></div></div>
-        <div class="stp"><label for="irut">Ingrese el RUT del aportante</label><input id="irut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-irut"></div></div>
-        <div class="stp"><label for="ifecha">Ingrese la fecha del ingreso</label><input id="ifecha" type="date"><div class="err" id="e-ifecha"></div></div>
-        <div class="stp"><label for="imonto">Ingrese el monto (CLP)</label><input id="imonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-imonto"></div></div>
+        <div class="stp"><label for="itipo">Seleccione el tipo de ingreso</label><select id="itipo"><option value="Efectivo">Efectivo (dinero)</option><option value="Crédito con mandato">Crédito con mandato</option></select></div>
+        <div class="stp" data-m="e"><label for="iap">Ingrese el nombre del aportante</label><input id="iap" autocomplete="off"><div class="err" id="e-iap"></div></div>
+        <div class="stp" data-m="e"><label for="irut">Ingrese el RUT del aportante</label><input id="irut" placeholder="12.345.678-5" autocomplete="off"><div class="err" id="e-irut"></div></div>
+        <div class="stp" data-m="e"><label for="ifecha">Ingrese la fecha del ingreso</label><input id="ifecha" type="date"><div class="err" id="e-ifecha"></div></div>
+        <div class="stp" data-m="e"><label for="imonto">Ingrese el monto (CLP)</label><input id="imonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><div class="err" id="e-imonto"></div></div>
+        <div class="stp" data-m="c"><label for="cdoc">Ingrese el número de documento</label><input id="cdoc" class="m" inputmode="numeric" autocomplete="off"></div>
+        <div class="stp" data-m="c"><label for="cfecha">Ingrese la fecha del mandato</label><input id="cfecha" type="date"></div>
+        <div class="stp" data-m="c"><label for="cinst">Seleccione o ingrese la institución financiera</label><input id="cinst" list="bancos" autocomplete="off"><datalist id="bancos"><option value="Banco de Chile"><option value="BancoEstado"><option value="Banco Santander"><option value="Banco BCI"><option value="Scotiabank"><option value="Banco Itaú"><option value="Banco Security"><option value="Banco Consorcio"><option value="Banco Falabella"><option value="Banco Ripley"><option value="Banco Bice"><option value="Banco Internacional"></datalist></div>
+        <div class="stp" data-m="c"><label for="ccta">Ingrese la cuenta bancaria</label><input id="ccta" class="m" inputmode="numeric" autocomplete="off"></div>
+        <div class="stp" data-m="c"><label for="cbruto">Ingrese el monto bruto (CLP)</label><input id="cbruto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"></div>
+        <div class="stp" data-m="c"><label for="cint">Ingrese los intereses (CLP)</label><input id="cint" class="m" inputmode="numeric" placeholder="0" autocomplete="off"><label for="ctot" style="margin-top:16px">Total: monto bruto + intereses</label><input id="ctot" class="m" readonly></div>
+        <div class="stp" data-m="c"><label for="cadj">Adjunte el archivo del crédito con mandato</label><input id="cadj" type="file" multiple accept=".pdf,.jpg,.jpeg,.png,.xml,.xlsx,.doc,.docx"><div class="files" id="cfl"></div></div>
+      </div>
+      <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
+    </form>
+  </section>
+
+  <section id="s6" hidden>
+    <h2>Vista previa</h2><p class="sub">Revise la información antes de guardar.</p>
+    <div class="pvw"><h3 class="pq">¿Los datos están correctos?</h3><dl class="pv" id="pvl"></dl>
+      <div class="actions"><button class="btn" id="pvy" type="button">Sí</button><button class="btn alt" id="pvn" type="button">No</button></div></div>
+  </section>
+
+  <section id="s7" hidden>
+    <h2 id="s7t">Registrar un bien o servicio donado</h2><p class="sub">Donación en bienes, especies o servicios — valorice a precio de mercado. Se registrará automáticamente el gasto valorizado (doble partida).</p>
+    <form id="fd" novalidate>
+      <div class="fields">
+        <div class="stp"><label for="dtipo">Seleccione el tipo de ingreso</label><select id="dtipo"><option value="">Seleccione…</option><option>Aporte propio en especies o servicios de la candidatura</option><option>Aportes en especies o servicios de terceros</option></select></div>
+        <div class="stp"><label for="dcat">Seleccione el tipo de aporte</label><select id="dcat"><option value="">Seleccione…</option><option>Registro de Brigadistas y Voluntarios</option><option>Registro de Sedes</option><option>Registro de Vehículos</option><option>Autorización de Propaganda en Espacios Privados</option><option>Declaración sobre Medios Digitales</option><option>Aportes en especies estimables en dinero</option></select></div>
+        <div class="stp"><label for="dap">Ingrese el nombre del aportante</label><input id="dap" autocomplete="off"></div>
+        <div class="stp"><label for="drut">Ingrese el RUT del aportante</label><input id="drut" placeholder="12.345.678-5" autocomplete="off"></div>
+        <div class="stp"><label for="dfecha">Ingrese la fecha del aporte</label><input id="dfecha" type="date"></div>
+        <div class="stp"><label for="dmonto">Ingrese el monto valorizado a precio de mercado (CLP)</label><input id="dmonto" class="m" inputmode="numeric" placeholder="0" autocomplete="off"></div>
       </div>
       <div class="actions"><span class="prog" data-w="prog"></span><button class="btn alt" type="button" data-w="prev">Anterior</button><button class="btn" type="button" data-w="next">Siguiente</button><button class="btn alt" type="button" data-w="cancel">Cancelar</button></div>
     </form>
   </section>
 
   <section class="log">
-    <div class="bar"><div><h2>Ingresos registrados</h2></div><select class="srt" data-s="i" aria-label="Ordenar ingresos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option></select></div>
+    <div class="bar"><div><h2>Ingresos registrados</h2></div><select class="srt" data-s="i" aria-label="Ordenar ingresos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select></div>
     <div class="tw"><table style="min-width:560px"><thead><tr><th>Fecha</th><th>Aportante</th><th>Tipo</th><th class="n">Monto</th><th></th></tr></thead><tbody id="ti"></tbody></table></div>
-    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="srt" data-s="g" aria-label="Ordenar gastos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option></select><button class="btn alt" id="csv" type="button">Exportar CSV</button></div></div>
+    <div class="bar" style="margin-top:36px"><div><h2>Gastos registrados</h2><p class="sub" style="margin:0" id="cnt"></p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><select class="srt" data-s="g" aria-label="Ordenar gastos"><option value="r">Más recientes</option><option value="m">Monto: mayor a menor</option><option value="a">Monto: menor a mayor</option></select><button class="btn alt" id="csv" type="button">Exportar CSV</button></div></div>
     <div class="tw"><table style="min-width:860px"><thead><tr><th>Fecha</th><th>Gasto</th><th>Proveedor</th><th>Documento</th><th>Pago</th><th>Archivos</th><th class="n">Monto</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
   </section>
 </main>
@@ -277,7 +315,7 @@ const $=id=>document.getElementById(id);
 const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maximumFractionDigits:0}).format(n);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}};
-let ed=null,G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
+let pv=null,ed=null,G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
 const sv=()=>{try{localStorage.setItem("gastos2",JSON.stringify(G));localStorage.setItem("ingresos2",JSON.stringify(IN))}catch(e){}};
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
 const base=C.map((c,i)=>C.slice(0,i).reduce((a,x)=>a+x[4].length,0));
@@ -300,11 +338,13 @@ function cards(id,items){
 }
 function show(n){
   if(n<4)ed=null;
-  ["s0","s1","s2","s3","s4","s5"].forEach((id,i)=>$(id).hidden=i!==n);
+  ["s0","s1","s2","s3","s4","s5","s6","s7"].forEach((id,i)=>$(id).hidden=i!==n);
+  $("ayuda").hidden=!((n>=1&&n<=4)||(n===6&&pv&&pv.id==="f"));
   if(n!==4)hideAl();$("al2").hidden=true;
   const c=$("crumbs");c.innerHTML="";
   const L=[["Inicio",0]];
-  if(n===5)L.push([ed?"Editar registro":$("s5t").textContent,5]);
+  if(n===5||n===7)L.push([ed?"Editar registro":$(n===5?"s5t":"s7t").textContent,n]);
+  else if(n===6)L.push(["Vista previa",6]);
   else if(n>=1){
     L.push(["Tipos de gasto",1]);
     if(ed&&n>=4)L.push(["Editar registro",n]);
@@ -335,51 +375,90 @@ function dv(b){let s=0,m=2;for(let i=b.length-1;i>=0;i--){s+=+b[i]*m;m=m===7?2:m
 function fmtRut(v){v=cleanRut(v);if(v.length<2)return v;return v.slice(0,-1).replace(/\B(?=(\d{3})+(?!\d))/g,".")+"-"+v.slice(-1)}
 function rutOk(v){v=cleanRut(v);return v.length>=8&&dv(v.slice(0,-1))===v.slice(-1)}
 const money=id=>$(id).addEventListener("input",e=>{const n=e.target.value.replace(/\D/g,"");e.target.value=n?Number(n).toLocaleString("es-CL"):""});
-["rut","irut"].forEach(id=>$(id).addEventListener("input",e=>e.target.value=fmtRut(e.target.value)));
-money("monto");money("imonto");
+["rut","irut","drut"].forEach(id=>$(id).addEventListener("input",e=>e.target.value=fmtRut(e.target.value)));
+money("monto");money("imonto");money("dmonto");money("cbruto");
+const tot=()=>{const b=val($("cbruto").value),n=val($("cint").value);$("ctot").value=(b||n)?fmt(b+n):""};
+$("cbruto").addEventListener("input",tot);
+$("cint").addEventListener("input",e=>{const n=e.target.value.replace(/\D/g,"");e.target.value=n===""?"":Number(n).toLocaleString("es-CL");tot()});
+["cdoc","ccta"].forEach(id=>$(id).addEventListener("input",e=>e.target.value=e.target.value.replace(/[^\d-]/g,"")));
+$("cadj").addEventListener("change",e=>{$("cfl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
+$("fi").addEventListener("reset",()=>{$("cfl").textContent="";$("ctot").value=""});
 $("ndoc").addEventListener("input",e=>e.target.value=e.target.value.replace(/\D/g,""));
 $("arch").addEventListener("change",e=>{$("fl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
 $("inf").addEventListener("change",e=>{$("fl2").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
 $("f").addEventListener("reset",()=>{$("fl").textContent="";$("fl2").textContent=""});
-function openIn(don){
-  ed=null;$("fi").reset();clr();$("itipo").value=don?"Valorizado":"Efectivo";
-  $("s5t").textContent=don?"Registrar un bien o servicio donado":"Registrar un ingreso";
-  $("s5s").textContent=don?"Donación en bienes, especies o servicios — valorice a precio de mercado.":"Aportes recibidos por la campaña.";
-  W.fi.i=0;wz("fi");show(5);
+function openIn(){
+  ed=null;$("fi").reset();clr();$("s5t").textContent="Registrar un ingreso";
+  $("s5s").textContent="Aportes recibidos por la campaña.";W.fi.i=0;wz("fi");show(5);
 }
-$("q1").onclick=()=>show(1);$("q2").onclick=()=>openIn(false);
+function openD(){ed=null;$("fd").reset();clr();$("s7t").textContent="Registrar un bien o servicio donado";W.fd.i=0;wz("fd");show(7)}
+$("q1").onclick=()=>show(1);$("q2").onclick=openIn;$("q3").onclick=openD;
 const clr=()=>document.querySelectorAll(".err").forEach(e=>e.textContent="");
 const val=s=>+s.replace(/\D/g,"");
 
-const W={f:{i:0},fi:{i:0}};
+const W={f:{i:0},fi:{i:0},fd:{i:0}};
 const R=(id,m)=>()=>rutOk($(id).value)?"":m;
 const NE=(id,m)=>()=>$(id).value.trim()?"":m;
 const MON=id=>()=>{const v=val($(id).value);if(v>49999)return"";showMin();return"El monto debe ser mayor a $50.000."};
 const INF=()=>{if(!($("inf").files.length||(ed&&ed.k==="g"&&ed.rec.inf&&ed.rec.inf.length)))return"Adjunte el informe de actividades.";return document.querySelector("#infs input:checked")?"":"Marque al menos un contenido del informe."};
+const VI_E=[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),MON("imonto")];
+const VI_C=[()=>"",NE("cdoc","Ingrese el número de documento."),NE("cfecha","Ingrese la fecha del mandato."),NE("cinst","Ingrese la institución financiera."),NE("ccta","Ingrese la cuenta bancaria."),MON("cbruto"),()=>$("cint").value.trim()===""?"Ingrese los intereses (puede ser 0).":"",()=>($("cadj").files.length||(ed&&ed.rec&&ed.rec.cred&&ed.rec.cred.adj.length))?"":"Adjunte el archivo del crédito."];
 const V={
  f:[R("rut","Ingrese un RUT válido."),NE("prov","Ingrese el nombre del proveedor."),NE("tdoc","Seleccione el tipo de documento."),NE("ndoc","Ingrese el número del documento."),NE("fecha","Seleccione la fecha."),MON("monto"),()=>"",()=>($("arch").files.length||(ed&&ed.k==="g"&&ed.rec.arch.length))?"":"Adjunte al menos un archivo de respaldo.",INF],
- fi:[()=>"",NE("iap","Ingrese el nombre del aportante."),R("irut","Ingrese un RUT válido."),NE("ifecha","Seleccione la fecha."),MON("imonto")]
+ fi:()=>$("itipo").value==="Crédito con mandato"?VI_C:VI_E,
+ fd:[NE("dtipo","Seleccione el tipo de ingreso."),NE("dcat","Seleccione el tipo de aporte."),NE("dap","Ingrese el nombre del aportante."),R("drut","Ingrese un RUT válido."),NE("dfecha","Seleccione la fecha."),MON("dmonto")]
 };
+const steps=id=>{const m=id==="fi"&&$("itipo").value==="Crédito con mandato"?"c":"e";return[...$(id).querySelectorAll(".stp")].filter(s=>!s.dataset.m||s.dataset.m===m)};
 function wz(id){
-  const f=$(id),S=[...f.querySelectorAll(".stp")],i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
+  const f=$(id),S=steps(id),i=W[id].i,q=k=>f.querySelector("[data-w="+k+"]");
+  f.querySelectorAll(".stp").forEach(s=>s.hidden=true);
   S.forEach((s,k)=>{s.hidden=k!==i;if(!s.querySelector(".err")){const e=document.createElement("div");e.className="err";s.append(e)}});
   q("prev").hidden=i===0;
-  q("next").textContent=i===S.length-1?(id==="f"?"Registrar gasto":"Guardar ingreso"):"Siguiente";
+  q("next").textContent=i===S.length-1?"Vista previa":"Siguiente";
   q("prog").textContent="Paso "+(i+1)+" de "+S.length;
   const x=S[i].querySelector("input:not([type=radio]),select");if(x&&x.type!=="file")x.focus();
 }
 function next(id){
-  const S=[...$(id).querySelectorAll(".stp")],i=W[id].i,m=V[id][i]();
+  const S=steps(id),i=W[id].i,vs=typeof V[id]==="function"?V[id]():V[id],m=vs[i]();
   clr();
   if(m){S[i].querySelector(".err").textContent=m;return}
-  if(i<S.length-1){W[id].i++;wz(id)}else(id==="f"?saveG:saveI)();
+  if(i<S.length-1){W[id].i++;wz(id)}else preview(id);
 }
-["f","fi"].forEach(id=>{const f=$(id);
+["f","fi","fd"].forEach(id=>{const f=$(id);
   f.addEventListener("submit",e=>{e.preventDefault();next(id)});
   f.querySelector("[data-w=next]").onclick=()=>next(id);
   f.querySelector("[data-w=prev]").onclick=()=>{clr();W[id].i--;wz(id)};
   f.querySelector("[data-w=cancel]").onclick=()=>show(id==="f"&&!ed?3:0);
 });
+const dmy=s=>s.split("-").reverse().join("/");
+function preview(id){
+  let rows,ok,a44=false;
+  if(id==="f"){
+    const r=ed?ed.rec:null,c=r?null:C[st.c],s=r?null:c[4][st.s];
+    a44=r?!!r.a44:!!c[3];
+    const ar=[...$("arch").files].map(f=>f.name),inf=[...$("inf").files].map(f=>f.name),ix=[...document.querySelectorAll("#infs input:checked")].map(x=>x.value).join(", ");
+    rows=[["Categoría",r?r.cat:"Letra "+c[0].toUpperCase()+" · "+c[2]],["Subcategoría",r?r.sub:s[1]],["Tipo de gasto",r?r.tipo:s[2].split(";")[st.t]],
+      ["RUT proveedor",$("rut").value],["Proveedor",$("prov").value],["Tipo de documento",$("tdoc").value],["N° de documento",$("ndoc").value],
+      ["Fecha de documento",dmy($("fecha").value)],["Monto",fmt(val($("monto").value)),1],["Forma de pago",document.querySelector("input[name=pago]:checked").value],
+      ["Archivos",(ar.length?ar:(r?r.arch:[])).join(" · ")],["Informe de actividades",(inf.length?inf:(r&&r.inf?r.inf:[])).join(" · ")+(ix?" ("+ix+")":"")]];
+    ok=saveG;
+  }else if(id==="fd"){
+    rows=[["Tipo de ingreso",$("dtipo").value],["Tipo de aporte",$("dcat").value],["Aportante",$("dap").value],["RUT aportante",$("drut").value],["Fecha",dmy($("dfecha").value)],["Monto valorizado",fmt(val($("dmonto").value)),1],["Registro automático","Se generará el gasto valorizado por el mismo monto"]];
+    ok=saveD;
+  }else if($("itipo").value==="Crédito con mandato"){
+    const b=val($("cbruto").value),n=val($("cint").value),ad=[...$("cadj").files].map(f=>f.name);
+    rows=[["Tipo de ingreso","Crédito con mandato"],["N° de documento",$("cdoc").value],["Fecha del mandato",dmy($("cfecha").value)],["Institución financiera",$("cinst").value],["Cuenta bancaria",$("ccta").value],["Monto bruto",fmt(b),1],["Intereses",fmt(n),1],["Total (bruto + intereses)",fmt(b+n),1],["Archivo adjunto",(ad.length?ad:(ed&&ed.rec.cred?ed.rec.cred.adj:[])).join(" · ")]];
+    ok=saveI;
+  }else{
+    rows=[["Tipo de ingreso","Efectivo (dinero)"],["Aportante",$("iap").value],["RUT aportante",$("irut").value],["Fecha",dmy($("ifecha").value)],["Monto",fmt(val($("imonto").value)),1]];
+    ok=saveI;
+  }
+  pv={id,back:id==="f"?4:id==="fd"?7:5,ok,a44};
+  $("pvl").innerHTML=rows.map(([l,v,m])=>`<dt>${esc(l)}</dt><dd class="${m?"mm2":""}">${esc(v)||"—"}</dd>`).join("");
+  show(6);
+}
+$("pvy").onclick=()=>pv&&pv.ok();
+$("pvn").onclick=()=>{const p=pv;if(!p)return;W[p.id].i=0;wz(p.id);show(p.back);if(p.a44)showAl(false)};
 function saveG(){
   const arch=[...$("arch").files].map(f=>f.name),inf=[...$("inf").files].map(f=>f.name),was=!!ed;
   const d={rut:$("rut").value,prov:$("prov").value.trim(),tdoc:$("tdoc").value,ndoc:$("ndoc").value,fecha:$("fecha").value,monto:val($("monto").value),pago:document.querySelector("input[name=pago]:checked").value,infs:[...document.querySelectorAll("#infs input:checked")].map(x=>x.value)};
@@ -390,9 +469,19 @@ function saveG(){
   sv();render();show(0);toast(was?"Gasto actualizado":"Gasto registrado");if(a44)showAl(true);
 }
 function saveI(){
-  const was=!!ed,d={tipo:$("itipo").value,ap:$("iap").value.trim(),rut:$("irut").value,fecha:$("ifecha").value,monto:val($("imonto").value)};
+  const was=!!ed,t=$("itipo").value;let d;
+  if(t==="Crédito con mandato"){
+    const bruto=val($("cbruto").value),int=val($("cint").value),adj=[...$("cadj").files].map(f=>f.name);
+    d={tipo:t,ap:$("cinst").value.trim(),rut:"",fecha:$("cfecha").value,monto:bruto+int,
+       cred:{doc:$("cdoc").value,cta:$("ccta").value,bruto,int,adj:adj.length?adj:(ed&&ed.rec.cred?ed.rec.cred.adj:[])}};
+  }else d={tipo:"Efectivo",ap:$("iap").value.trim(),rut:$("irut").value,fecha:$("ifecha").value,monto:val($("imonto").value),cred:null};
   if(ed)Object.assign(ed.rec,d);else IN.unshift({id:Date.now(),...d});
   sv();render();show(0);toast(was?"Ingreso actualizado":"Ingreso registrado");
+}
+function saveD(){
+  const was=!!ed,d={tipo:"Valorizado",dtipo:$("dtipo").value,dcat:$("dcat").value,ap:$("dap").value.trim(),rut:$("drut").value,fecha:$("dfecha").value,monto:val($("dmonto").value)};
+  if(ed)Object.assign(ed.rec,d);else IN.unshift({id:Date.now(),...d});
+  sv();render();show(0);toast(was?"Aporte actualizado":"Aporte registrado: ingreso y gasto valorizado");
 }
 function editG(id){
   const r=G.find(x=>x.id==id);if(!r)return;ed={k:"g",rec:r};$("f").reset();clr();
@@ -404,38 +493,52 @@ function editG(id){
   W.f.i=0;wz("f");show(4);if(r.a44)showAl(false);
 }
 function editI(id){
-  const r=IN.find(x=>x.id==id);if(!r)return;ed={k:"i",rec:r};$("fi").reset();clr();
-  $("itipo").value=r.tipo;$("iap").value=r.ap;$("irut").value=r.rut;$("ifecha").value=r.fecha;$("imonto").value=r.monto.toLocaleString("es-CL");
+  const r=IN.find(x=>x.id==id);if(!r)return;ed={k:"i",rec:r};
+  const nf=n=>n.toLocaleString("es-CL");
+  if(r.tipo==="Valorizado"){
+    $("fd").reset();clr();$("dtipo").value=r.dtipo||"";$("dcat").value=r.dcat||"";$("dap").value=r.ap;$("drut").value=r.rut;$("dfecha").value=r.fecha;$("dmonto").value=nf(r.monto);
+    $("s7t").textContent="Editar aporte valorizado";W.fd.i=0;wz("fd");show(7);return;
+  }
+  $("fi").reset();clr();$("itipo").value=r.tipo==="Crédito con mandato"?r.tipo:"Efectivo";
+  if(r.tipo==="Crédito con mandato"&&r.cred){
+    $("cdoc").value=r.cred.doc;$("cfecha").value=r.fecha;$("cinst").value=r.ap;$("ccta").value=r.cred.cta;$("cbruto").value=nf(r.cred.bruto);$("cint").value=nf(r.cred.int);tot();
+    $("cfl").textContent=r.cred.adj.length?"Archivos actuales: "+r.cred.adj.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
+  }else{$("iap").value=r.ap;$("irut").value=r.rut;$("ifecha").value=r.fecha;$("imonto").value=nf(r.monto)}
   $("s5t").textContent="Editar ingreso";W.fi.i=0;wz("fi");show(5);
 }
 
 const sum=(a,f)=>a.filter(f).reduce((t,r)=>t+r.monto,0);
 const SORT={g:"r",i:"r"};
 function render(){
-  const iE=sum(IN,r=>r.tipo==="Efectivo"),iV=sum(IN,r=>r.tipo==="Valorizado"),
+  const iE=sum(IN,r=>r.tipo!=="Valorizado"),iV=sum(IN,r=>r.tipo==="Valorizado"),
         gE=sum(G,r=>r.pago!=="Pendiente de Pago"),gP=sum(G,r=>r.pago==="Pendiente de Pago");
-  const df=iE+iV-gE,tI=iE+iV+gP,tG=gE+gP,set=(id,v)=>$(id).textContent=fmt(v);
+  const df=iE-gE,tI=iE+iV+gP,tG=gE+gP+iV,set=(id,v)=>$(id).textContent=fmt(v);
   set("ti-t",tI);set("ti-e",iE);set("ti-v",iV);set("ti-p",gP);
-  set("tg-t",tG);set("tg-e",gE);set("tg-v",0);set("tg-p",gP);
+  set("tg-t",tG);set("tg-e",gE);set("tg-v",iV);set("tg-p",gP);
   set("td-t",Math.abs(df));
   $("td-m").textContent=df>0?"Los Ingresos electorales son mayores que los gastos, favor corregir":df<0?"Los Gastos electorales son mayores que los ingresos, favor corregir":"Los ingresos y los gastos electorales coinciden";
   $("td").classList.toggle("ok",df===0);
   $("cnt").textContent=G.length+(G.length===1?" registro":" registros");
   const d=f=>f.split("-").reverse().join("/");
-  const gs=SORT.g==="m"?[...G].sort((a,b)=>b.monto-a.monto):G;
-  $("tb").innerHTML=gs.length?gs.map(r=>`<tr><td>${d(r.fecha)}</td>
+  const tl=r=>r.tipo==="Valorizado"?"Valorizado (especies)":r.tipo==="Crédito con mandato"?"Crédito con mandato":"Efectivo";
+  const gR=G.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
     <td><strong>${esc(r.tipo)}</strong><br><span class="mut">${esc(r.sub)}</span><br><span class="mut mm">${esc(r.cat)}</span></td>
     <td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td>
     <td>${esc(r.tdoc)}<br><span class="mm">N° ${esc(r.ndoc)}</span></td>
     <td><span class="tag ${r.pago==="Pendiente de Pago"?"p":""}">${esc(r.pago)}</span></td>
     <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}${[].concat(r.infs||[]).length?" ("+[].concat(r.infs).join(", ")+")":""}</span>`:""}</td>
-    <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`).join("")
-   :`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
-  const iR=IN.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><span class="tag">${r.tipo==="Valorizado"?"Valorizado (especies)":"Efectivo"}</span></td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}))
+    <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`}))
+   .concat(IN.filter(r=>r.tipo==="Valorizado").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
+    <td><strong>Gasto valorizado</strong><br><span class="mut">${esc(r.dcat||"Aporte en especies")}</span></td>
+    <td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td><td>—</td>
+    <td><span class="tag">Valorizado</span></td><td>—</td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`})));
+  const so=(a,k)=>{if(k==="m")a.sort((x,y)=>y.m-x.m);if(k==="a")a.sort((x,y)=>x.m-y.m);return a};
+  $("cnt").textContent=gR.length+(gR.length===1?" registro":" registros");
+  $("tb").innerHTML=gR.length?so(gR,SORT.g).map(x=>x.h).join(""):`<tr><td colspan="8" class="empty">Aún no hay gastos registrados.</td></tr>`;
+  const iR=IN.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut||(r.cred?"Doc N° "+r.cred.doc:""))}</span></td>
+    <td><span class="tag">${tl(r)}</span>${r.tipo==="Valorizado"&&r.dcat?`<br><span class="mut mm">${esc(r.dcat)}</span>`:""}</td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}))
    .concat(G.filter(r=>r.pago==="Pendiente de Pago").map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.prov)}<br><span class="mut mm">${esc(r.rut)}</span></td><td><span class="tag p">Pendiente de pago</span></td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`})));
-  if(SORT.i==="m")iR.sort((a,b)=>b.m-a.m);
-  $("ti").innerHTML=iR.length?iR.map(x=>x.h).join(""):`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
+  $("ti").innerHTML=iR.length?so(iR,SORT.i).map(x=>x.h).join(""):`<tr><td colspan="5" class="empty">Aún no hay ingresos registrados.</td></tr>`;
 }
 document.addEventListener("click",e=>{
   const D=e.target.dataset;if(D.eg)return editG(D.eg);if(D.ei)return editI(D.ei);
@@ -444,10 +547,10 @@ document.addEventListener("click",e=>{
   if(i&&confirm("¿Eliminar este ingreso?")){IN=IN.filter(r=>r.id!=i);sv();render()}
 });
 $("csv").onclick=()=>{
-  if(!G.length)return toast("No hay gastos para exportar");
+  if(!G.length&&!IN.some(r=>r.tipo==="Valorizado"))return toast("No hay gastos para exportar");
   const h=["Fecha","Categoría","Subcategoría","Tipo de gasto","Rut proveedor","Proveedor","Tipo de documento","N° documento","Monto","Forma de pago","Archivos"];
   const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";"))).join("\n");
+  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";")),IN.filter(r=>r.tipo==="Valorizado").map(r=>[r.fecha,"Gasto valorizado",r.dcat||"",r.dtipo||"",r.rut,r.ap,"—","—",r.monto,"Valorizado",""].map(q).join(";"))).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv;charset=utf-8"}));a.download="gastos-electorales.csv";a.click();
 };
 document.querySelectorAll(".srt").forEach(s=>s.onchange=()=>{SORT[s.dataset.s]=s.value;render()});
