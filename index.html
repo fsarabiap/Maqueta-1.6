@@ -339,6 +339,10 @@ const fmt=n=>new Intl.NumberFormat("es-CL",{style:"currency",currency:"CLP",maxi
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const ld=k=>{try{return JSON.parse(localStorage.getItem(k)||"[]")}catch(e){return[]}};
 let pv=null,ed=null,G=ld("gastos2"),IN=ld("ingresos2"),st={c:null,s:null,t:null},alT;
+// Un formulario de varios registros valorizados = un solo registro (items)
+IN=(()=>{const out=[],by={};IN.forEach(r=>{if(r.tipo!=="Valorizado")return out.push(r);
+  const it=r.items||[{rut:r.rut,ap:r.ap,monto:r.monto,det:r.det||{}}],k=r.lote||r.id;
+  if(by[k]){by[k].items=by[k].items.concat(it);by[k].monto+=r.monto}else{by[k]={...r,items:it};delete by[k].det;out.push(by[k])}});return out})();
 const sv=()=>{try{localStorage.setItem("gastos2",JSON.stringify(G));localStorage.setItem("ingresos2",JSON.stringify(IN))}catch(e){}};
 const toast=m=>{const t=$("toast");t.textContent=m;t.classList.add("on");setTimeout(()=>t.classList.remove("on"),2200)};
 const base=C.map((c,i)=>C.slice(0,i).reduce((a,x)=>a+x[4].length,0));
@@ -448,7 +452,7 @@ $("drb").addEventListener("click",e=>{if(e.target.dataset.rm){e.target.closest("
 $("dadd").onclick=()=>{dRow();const r=$("drb").rows;r[r.length-1].querySelector("input").focus()};
 $("dadj").addEventListener("change",e=>{$("dfl").textContent=[...e.target.files].map(f=>f.name).join(" · ")});
 $("fd").addEventListener("reset",()=>{$("dfl").textContent=""});
-const dDet=r=>{const d=r.det||{};return(DF[r.dcat]||[]).filter(([k])=>k!=="rut"&&k!=="ap"&&d[k]).map(([k,l])=>l+": "+d[k]).join(" · ")};
+const dDet=(r,c)=>{const d=r.det||{};return(DF[c]||[]).filter(([k])=>k!=="rut"&&k!=="ap"&&d[k]).map(([k,l])=>l+": "+d[k]).join(" · ")};
 function openIn(){
   ed=null;$("fi").reset();clr();$("s5t").textContent="Registrar un ingreso";
   $("s5s").textContent="Aportes recibidos por la campaña.";W.fi.i=0;wz("fi");show(5);
@@ -517,7 +521,7 @@ function preview(id){
     const RW=dRows(),F=dF().filter(([k])=>k!=="monto"),t=RW.reduce((a,r)=>a+r.monto,0),ad=[...$("dadj").files].map(f=>f.name);
     rows=[["Tipo de ingreso",$("dtipo").value],["Tipo de aporte",$("dcat").value],["Fecha",dmy($("dfecha").value)]]
       .concat(RW.map((r,i)=>["Registro "+(i+1),F.map(([k,l])=>l+": "+r[k]).join(" · ")+" — "+fmt(r.monto)]))
-      .concat([["Total valorizado",fmt(t),1],["Documentos adjuntos",(ad.length?ad:(ed&&ed.rec.adj?ed.rec.adj:[])).join(" · ")],["Registro automático",RW.length===1?"Se generará el gasto valorizado por el mismo monto":"Se generarán "+RW.length+" gastos valorizados por el mismo monto total"]]);
+      .concat([["Total valorizado",fmt(t),1],["Documentos adjuntos",(ad.length?ad:(ed&&ed.rec.adj?ed.rec.adj:[])).join(" · ")],["Registro automático","Se guardará como un solo registro y se generará el gasto valorizado por el mismo monto total"]]);
     ok=saveD;
   }else if($("itipo").value==="Crédito con mandato"){
     const b=val($("cbruto").value),n=val($("cint").value),ad=[...$("cadj").files].map(f=>f.name);
@@ -554,11 +558,11 @@ function saveI(){
 }
 function saveD(){
   const was=!!ed,RW=dRows(),nf=[...$("dadj").files].map(f=>f.name),now=Date.now();
-  const b={tipo:"Valorizado",dtipo:$("dtipo").value,dcat:$("dcat").value,fecha:$("dfecha").value,adj:nf.length?nf:(ed&&ed.rec.adj?ed.rec.adj:[]),lote:(ed&&ed.rec.lote)||now};
-  const mk=r=>{const{rut,ap,monto,...det}=r;return{...b,rut,ap,monto,det}};
-  let k0=0;if(ed){Object.assign(ed.rec,mk(RW[0]));k0=1}
-  RW.slice(k0).reverse().forEach((r,k)=>IN.unshift({id:now+k+1,...mk(r)}));
-  sv();render();show(0);toast(was?"Aporte actualizado":RW.length+(RW.length===1?" registro valorizado guardado":" registros valorizados guardados")+": ingreso y gasto");
+  const items=RW.map(r=>{const{rut,ap,monto,...det}=r;return{rut,ap,monto,det}});
+  const d={tipo:"Valorizado",dtipo:$("dtipo").value,dcat:$("dcat").value,fecha:$("dfecha").value,adj:nf.length?nf:(ed&&ed.rec.adj?ed.rec.adj:[]),
+    items,monto:items.reduce((t,x)=>t+x.monto,0),rut:items[0].rut,ap:items.length===1?items[0].ap:items.length+" registros"};
+  if(ed)Object.assign(ed.rec,d);else IN.unshift({id:now,...d});
+  sv();render();show(0);toast(was?"Aporte actualizado":"Aporte valorizado guardado ("+items.length+(items.length===1?" registro":" registros")+"): ingreso y gasto");
 }
 function editG(id){
   const r=G.find(x=>x.id==id);if(!r)return;ed={k:"g",rec:r};$("f").reset();clr();
@@ -573,7 +577,7 @@ function editI(id){
   const r=IN.find(x=>x.id==id);if(!r)return;ed={k:"i",rec:r};
   const nf=n=>n.toLocaleString("es-CL");
   if(r.tipo==="Valorizado"){
-    $("fd").reset();clr();$("dtipo").value=r.dtipo||"";$("dcat").value=r.dcat||"";$("dfecha").value=r.fecha;dReset([{rut:r.rut,ap:r.ap,monto:r.monto,...(r.det||{})}]);
+    $("fd").reset();clr();$("dtipo").value=r.dtipo||"";$("dcat").value=r.dcat||"";$("dfecha").value=r.fecha;dReset((r.items||[]).map(x=>({rut:x.rut,ap:x.ap,monto:x.monto,...(x.det||{})})));
     $("dfl").textContent=r.adj&&r.adj.length?"Archivos actuales: "+r.adj.join(" · ")+" (seleccione nuevos solo si desea reemplazarlos)":"";
     $("s7t").textContent="Editar aporte valorizado";W.fd.i=0;wz("fd");show(7);return;
   }
@@ -613,12 +617,14 @@ function render(){
     <td>${r.arch.length?r.arch.map(esc).join("<br>"):"—"}${r.inf&&r.inf.length?`<br><span class="mut mm">Informe: ${r.inf.map(esc).join(", ")}${[].concat(r.infs||[]).length?" ("+[].concat(r.infs).join(", ")+")":""}</span>`:""}</td>
     <td class="n">${fmt(r.monto)}</td><td><button class="ed" data-eg="${r.id}">Editar</button><button class="del" data-g="${r.id}">Eliminar</button></td></tr>`}))
    ;
+  const IT=r=>r.items||[],apH=r=>{const L=IT(r);return(L.length>1?`<strong>${L.length} registros</strong><br>`:"")+L.map(x=>`${esc(x.ap)}<br><span class="mut mm">${esc(x.rut)}</span>`).join("<br>")};
+  const dtH=r=>{const L=IT(r);return L.map(x=>{const t=esc(dDet(x,r.dcat));return L.length>1?(t?t+" — ":"")+`<span class="mm">${fmt(x.monto)}</span>`:t}).filter(Boolean).join("<br>")||"—"};
   const gvR=VZ.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
     <td><strong>Gasto valorizado</strong><br><span class="mut">${esc(r.dcat||"Aporte en especies")}</span></td>
-    <td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td><td>${esc(dDet(r))||"—"}</td>
+    <td>${apH(r)}</td><td>${dtH(r)}</td>
     <td>${adjH(r)}</td><td class="n">${fmt(r.monto)}</td><td class="mut">Automático</td></tr>`}));
-  const ivR=VZ.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${esc(r.ap)}<br><span class="mut mm">${esc(r.rut)}</span></td>
-    <td><strong>${esc(r.dcat||"Aporte en especies")}</strong><br><span class="mut mm">${esc(r.dtipo||"")}</span></td><td>${esc(dDet(r))||"—"}</td>
+  const ivR=VZ.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td><td>${apH(r)}</td>
+    <td><strong>${esc(r.dcat||"Aporte en especies")}</strong><br><span class="mut mm">${esc(r.dtipo||"")}</span></td><td>${dtH(r)}</td>
     <td>${adjH(r)}</td><td class="n">${fmt(r.monto)}</td><td><button class="ed" data-ei="${r.id}">Editar</button><button class="del" data-i="${r.id}">Eliminar</button></td></tr>`}));
   const so=(a,k)=>{if(k==="m")a.sort((x,y)=>y.m-x.m);if(k==="a")a.sort((x,y)=>x.m-y.m);return a};
   $("cnt").textContent=gR.length+(gR.length===1?" registro":" registros");
@@ -641,7 +647,7 @@ $("csv").onclick=()=>{
   if(!G.length&&!IN.some(r=>r.tipo==="Valorizado"))return toast("No hay gastos para exportar");
   const h=["Fecha","Categoría","Subcategoría","Tipo de gasto","Rut proveedor","Proveedor","Tipo de documento","N° documento","Monto","Forma de pago","Archivos"];
   const q=v=>'"'+String(v).replace(/"/g,'""')+'"';
-  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";")),IN.filter(r=>r.tipo==="Valorizado").map(r=>[r.fecha,"Gasto valorizado",r.dcat||"",r.dtipo||"",r.rut,r.ap,"—","—",r.monto,"Valorizado",(r.adj||[]).join(" | ")].map(q).join(";"))).join("\n");
+  const c=[h.map(q).join(";")].concat(G.map(r=>[r.fecha,r.cat,r.sub,r.tipo,r.rut,r.prov,r.tdoc,r.ndoc,r.monto,r.pago,r.arch.join(" | ")].map(q).join(";")),IN.filter(r=>r.tipo==="Valorizado").map(r=>[r.fecha,"Gasto valorizado",r.dcat||"",r.dtipo||"",(r.items||[]).map(x=>x.rut).join(" | "),(r.items||[]).map(x=>x.ap+" ("+x.monto+")").join(" | "),"—","—",r.monto,"Valorizado",(r.adj||[]).join(" | ")].map(q).join(";"))).join("\n");
   const a=document.createElement("a");a.href=URL.createObjectURL(new Blob(["\ufeff"+c],{type:"text/csv;charset=utf-8"}));a.download="gastos-electorales.csv";a.click();
 };
 $("fas").onclick=()=>{FAS=!FAS;$("fas").classList.toggle("on",FAS);$("fas").setAttribute("aria-pressed",FAS);$("fas").textContent=FAS?"✖️ Ver todos los gastos":"🏢 Ver Arrendamientos y Servicios prestados";render()};
