@@ -607,7 +607,7 @@ function render(){
   const VZ=IN.filter(r=>r.tipo==="Valorizado"),adjH=r=>r.adj&&r.adj.length?r.adj.map(esc).join("<br>"):"—";
   const GS=FAS?G.filter(isAS):G;
   if(FAS){const a=G.filter(r=>/^Letra C /.test(r.cat)),s2=G.filter(r=>/^Letra D /.test(r.cat));
-    $("fasm").innerHTML=`Mostrando <b>Arrendamientos de bienes muebles o inmuebles</b> (${a.length} · ${fmt(sum(a,()=>1))}) y <b>Servicios prestados</b> (${s2.length} · ${fmt(sum(s2,()=>1))}). Total: <b class="mm2">${fmt(sum(GS,()=>1))}</b>`}
+    $("fasm").innerHTML=`Mostrando Gastos incorporados dentro del articulo 2 de la Ley 19.884  <b>letras c</b> (${a.length} · ${fmt(sum(a,()=>1))}) y <b>letras d</b> (${s2.length} · ${fmt(sum(s2,()=>1))}). Total: <b class="mm2">${fmt(sum(GS,()=>1))}</b>`}
   $("fasm").hidden=!FAS;
   const gR=GS.map(r=>({m:r.monto,h:`<tr><td>${d(r.fecha)}</td>
     <td><strong>${esc(r.tipo)}</strong><br><span class="mut">${esc(r.sub)}</span><br><span class="mut mm">${esc(r.cat)}</span></td>
